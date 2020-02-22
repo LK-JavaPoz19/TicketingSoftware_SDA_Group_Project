@@ -28,11 +28,7 @@ public class TicketService {
     public Set<Ticket> findAllTickets(){return new HashSet<>(ticketRepository.findAll());}
 
     public Ticket createAndAddNewTicket(NewTicket newTicket) {
-        Ticket ticket = new Ticket();
-        Status status = new Status(1L, "NEW");
-        ticket.setTicketStatus(status);
-        ticket.setQueue(newTicket.getQueue());
-        ticket.setUser(newTicket.getFromUser());
+        Ticket ticket = new Ticket(newTicket.getFromUser(), newTicket.getQueue());
         ticketRepository.save(ticket);
         return ticket;
     }

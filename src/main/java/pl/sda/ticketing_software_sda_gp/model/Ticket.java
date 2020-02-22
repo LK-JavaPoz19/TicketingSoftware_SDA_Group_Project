@@ -26,6 +26,15 @@ public class Ticket {
     @ManyToOne
     private Queue queue;
 
+    public Ticket() {
+    }
+
+    public Ticket(User user, Queue queue) {
+        this.user = user;
+        this.ticketStatus = new Status(1L, "NEW");
+        this.queue = queue;
+    }
+
     public Long getTicketId() {
         return ticketId;
     }
