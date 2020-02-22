@@ -25,4 +25,32 @@ public class Ticket {
     @NotNull
     @ManyToOne
     private Queue queue;
+
+    public Long getTicketId() {
+        return ticketId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Status getTicketStatus() {
+        return ticketStatus;
+    }
+
+    public void setTicketStatus(Status ticketStatus) {
+        this.ticketStatus = ticketStatus;
+    }
+
+    public Queue getQueue() {
+        return queue;
+    }
+
+    public void setQueue(Queue queue) {
+        this.queue = queue;
+    }
 }

@@ -17,6 +17,15 @@ public class Conversation {
     @OneToOne
     private Ticket ticket;
 
+    public Conversation() {
+
+    }
+
+    public Conversation(Long conversationId, Ticket ticket) {
+        this.conversationId = conversationId;
+        this.ticket = ticket;
+    }
+
     //    @OneToMany (
 //            mappedBy = "conversation"
 //            cascade = CascadeType.ALL,

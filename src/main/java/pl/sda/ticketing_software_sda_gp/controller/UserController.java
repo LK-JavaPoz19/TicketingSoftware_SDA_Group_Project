@@ -33,18 +33,4 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/tickets")
-    public Set<Ticket> getAllTickets(){
-        return ticketService.findAllTickets();
-    }
-
-    @GetMapping("/messages")
-    public Set<Message> getAllMessages(){
-        return messageService.findAllMessages();
-    }
-
-    @GetMapping("/conversations")
-    public Set<Conversation> getAllConversations(){
-        return conversationService.findAllConversations();
-    }
 }
