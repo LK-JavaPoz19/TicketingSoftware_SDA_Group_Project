@@ -1,7 +1,6 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
 
-
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,25 +13,30 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Long idMessage;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "conversation_id")
+    @Column(updatable = false, nullable = false)
+    private Long messageId;
+
     @NotNull
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime created;
+
+    @NotNull
+    @ManyToOne
     private Conversation conversation;
-    @ManyToOne(targetEntity = User.class)
+
     @NotNull
+    @ManyToOne
+    private MessageType messageType;
+
+    @NotNull
+    @ManyToOne
     private User fromUser;
-    @ManyToOne(targetEntity = User.class)
+
     @NotNull
+    @ManyToOne
     private User toUser;
+
     @NotNull
     private String body;
-    @Column(name="create_day",
-            columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
-            nullable = false, updatable = false)
-    private LocalDateTime date;
-
-
 }
 

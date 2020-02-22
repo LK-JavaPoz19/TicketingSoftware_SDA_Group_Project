@@ -7,6 +7,4 @@ import pl.sda.ticketing_software_sda_gp.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
-
-
 }

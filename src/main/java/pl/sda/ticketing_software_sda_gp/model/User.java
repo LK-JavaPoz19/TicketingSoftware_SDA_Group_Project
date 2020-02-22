@@ -13,24 +13,17 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
+    @Column(updatable = false, nullable = false)
+    private Long userId;
+
     @Column(unique = true)
     @NotNull
     private String username;
+
     @NotNull
     private String password;
-    @Column(unique = true)
-    @NotNull
-    private String email;
-    @Column(name="create_day",
-            columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
-            nullable = false, updatable = false)
-    private LocalDateTime createDay;
 
-    @ManyToOne(targetEntity = UserType.class)
     @NotNull
+    @ManyToOne
     private UserType userType;
-
-
 }
