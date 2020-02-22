@@ -12,10 +12,8 @@ public class UserType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true )
+
     @NotNull
-    private String type;
-    private String description;
-
-
+    @Column(unique = true)
+    private String userTypeName;
 }

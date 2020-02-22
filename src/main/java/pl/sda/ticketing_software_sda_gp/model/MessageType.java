@@ -3,19 +3,15 @@ package pl.sda.ticketing_software_sda_gp.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
-@Data
 @Entity
-public class Queue {
+@Data
+public class MessageType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
-    private Long queueId;
+    Long messageTypeId;
 
-    @NotNull
     @Column(nullable = false, unique = true)
-    private  String queueName;
+    private String messageTypeName;
 }
-

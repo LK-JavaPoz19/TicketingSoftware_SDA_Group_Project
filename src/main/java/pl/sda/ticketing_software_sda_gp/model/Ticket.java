@@ -11,17 +11,18 @@ public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Long idTicket;
-    @ManyToOne (targetEntity = Status.class)
+    @Column(updatable = false, nullable = false)
+    private Long ticketId;
+
     @NotNull
-    private Status status;
-    @ManyToOne (targetEntity = Queue.class)
+    @OneToOne
+    private User user;
+
     @NotNull
+    @ManyToOne
+    private Status ticketStatus;
+
+    @NotNull
+    @ManyToOne
     private Queue queue;
-    @OneToOne (fetch = FetchType.EAGER)
-    @NotNull
-    private Conversation conversation;
-
-
 }

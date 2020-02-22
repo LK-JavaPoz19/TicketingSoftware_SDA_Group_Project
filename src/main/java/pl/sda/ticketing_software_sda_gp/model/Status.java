@@ -11,11 +11,10 @@ public class Status {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Long idStatus;
-    @Column(unique = true )
-    @NotNull
-    private String name;
-    private String description;
+    @Column(updatable = false, nullable = false)
+    private Long statusId;
 
-   }
+    @NotNull
+    @Column(unique = true)
+    private String statusName;
+}
