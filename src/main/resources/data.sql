@@ -37,58 +37,37 @@ INSERT INTO conversation (ticket_ticket_id) VALUES (4);
 INSERT INTO conversation (ticket_ticket_id) VALUES (5);
 INSERT INTO conversation (ticket_ticket_id) VALUES (6);
 
---Konwersacja 1
-INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body)
-VALUES (1, '2020-01-01 09:42:00', 1, 4, 1, 'Dzień dobry. Chciałbym poznać warunki ubezpieczenia zakupionego sprzętu. Mój laptop jest uszkodzony.');
+-- Konwersacja 1
+INSERT INTO message (conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (1, '2020-01-01 09:42:00', 1, 4, 1, 'Dzien dośbry. Chcialbym poznac');
 
---Konwersacja 2
-INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body)
-VALUES (2, '2020-01-02 12:00:00', 1, 2, 4, 'Dzień dobry. Kontaktuje się w sprawie uszkodzenia mienia.');
-INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body)
-VALUES (2, '2020-01-02 12:30:00', 1, 4, 2, 'Nic mi o tym nie wiadomo!');
-INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body)
-VALUES (2, '2020-01-02 12:30:00', 1, 2, 4, 'Dziękuję za odpowiedź! Pozdrawiam.');
-INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body)
-VALUES (2, '2020-01-02 12:31:00', 2, 2, 1, 'SPRAWA ZAKNIĘTA');
-INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body)
-VALUES (2, '2020-01-02 12:45:00', 2, 6, 1, 'NIEPRAWDA - POPROŚ O WIĘCEJ SZCZEGÓŁÓW!!');
+-- Konwersacja 2
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:00:00', 1, 2, 4, 'Dzień dobry. Kontaktuje się w sprawie uszkodzenia mienia.');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:30:00', 1, 4, 2, 'Nic mi o tym nie wiadomo!');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:30:00', 1, 2, 4, 'Dziękuję za odpowiedź! Pozdrawiam.');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:31:00', 2, 2, 1, 'SPRAWA ZAKNIĘTA');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:45:00', 2, 6, 1, 'NIEPRAWDA - POPROŚ O WIĘCEJ SZCZEGÓŁÓW!!');
 
 -- Konswersacja 3
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 3, '2020-01-05 20:00:00', 1, 3, 0, 'Dzień dobry. Potrzebuję pomocy!');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 3, '2020-01-05 20:05:00', 1, 1, 3, 'W czym mogę pomóc?');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 3, '2020-01-05 20:30:00', 1, 3, 1, 'Już zapomniałem... Nieważne.');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 3, '2020-01-05 20:31:00', 2, 1, 0, 'SPRAWA ZAKNIĘTA');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 3, '2020-01-06 08:15:00', 2, 5, 0, 'DZIWNY KLIENT... ALE DOBRA ROBOTA!');
---
--- --Konwersacja 4
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 4, '2020-02-12 15:37:00', 1, 4, 0, 'Dzień dobry. Chciałbym się dowiedzieć jaki jest postęp w sprawie reklamacji mojego sprzętu.');
---
--- --Konwersacja 5
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 5, '2020-02-16 14:02:00', 1, 4, 2, 'Dzień dobry. Jestem niezadowolony z waszych usług.');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 5, '2020-02-16 14:05:00', 1, 2, 4, 'Proszę wyjaśnić.');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 5, '2020-01-16 14:07:00', 1, 4, 2, 'Czekam na odpowiedź już kilka dni!!');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 5, '2020-01-16 14:20:00', 2, 6, 0, 'ZAJMIJ SIĘ TYM - PILNIE!!!');
---
--- -- Konswersacja 6
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 6, '2020-02-20 22:00:00', 1, 4, 0, 'Halo! Jest tam kto?');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 6, '2020-02-20 22:10:00', 1, 2, 4, 'Oczywiście. W czym mogę pomóc?');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 6, '2020-02-20 22:12:00', 1, 4, 2, 'Tylko sprawdzałem czy ktoś tu pracuje.');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 6, '2020-02-20 22:13:00', 2, 2, 0, 'SPAM');
--- INSERT INTO message(id, conversation_id, created, type_id, from_id, to_id, content)
--- VALUES (nextval('conversations_elem_seq'), 6, '2020-02-21 08:15:00', 2, 6, 0, 'ZGADZA SIĘ');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (3, '2020-01-05 20:00:00', 1, 4, 1, 'Dzień dobry. Potrzebuję pomocy!');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (3, '2020-01-05 20:05:00', 1, 2, 4, 'W czym mogę pomóc?');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (3, '2020-01-05 20:30:00', 1, 4, 2, 'Już zapomniałem... Nieważne.');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (3, '2020-01-05 20:31:00', 2, 2, 1, 'SPRAWA ZAKNIĘTA');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (3, '2020-01-06 08:15:00', 2, 6, 1, 'DZIWNY KLIENT... ALE DOBRA ROBOTA!');
+
+--Konwersacja 4
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (4, '2020-02-12 15:37:00', 1, 5, 1, 'Dzień dobry. Chciałbym się dowiedzieć jaki jest postęp w sprawie reklamacji mojego sprzętu.');
+
+--Konwersacja 5
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (5, '2020-02-16 14:02:00', 1, 5, 3, 'Dzień dobry. Jestem niezadowolony z waszych usług.');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (5, '2020-02-16 14:05:00', 1, 3, 5, 'Proszę wyjaśnić.');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (5, '2020-01-16 14:07:00', 1, 5, 3, 'Czekam na odpowiedź już kilka dni!!');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (5, '2020-01-16 14:20:00', 2, 7, 1, 'ZAJMIJ SIĘ TYM - PILNIE!!!');
+
+-- Konswersacja 6
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (6, '2020-02-20 22:00:00', 1, 5, 1, 'Halo! Jest tam kto?');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (6, '2020-02-20 22:10:00', 1, 3, 5, 'Oczywiście. W czym mogę pomóc?');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (6, '2020-02-20 22:12:00', 1, 5, 3, 'Tylko sprawdzałem czy ktoś tu pracuje.');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (6, '2020-02-20 22:13:00', 2, 3, 1, 'SPAM');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (6, '2020-02-21 08:15:00', 2, 7, 1, 'ZGADZA SIĘ');
 
 commit;
