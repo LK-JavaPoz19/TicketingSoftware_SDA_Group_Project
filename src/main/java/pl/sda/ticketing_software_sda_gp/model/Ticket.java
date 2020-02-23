@@ -1,15 +1,11 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
-@NoArgsConstructor
 @Entity
 public class Ticket {
 
@@ -39,4 +35,6 @@ public class Ticket {
         this.ticketStatus = ticketStatus;
         this.queue = queue;
     }
+
+
 }
