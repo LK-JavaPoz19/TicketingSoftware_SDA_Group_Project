@@ -38,4 +38,14 @@ public class TicketService {
                 .orElseThrow(() -> new StatusNotFoundException("Status not found."));
         return ticketRepository.save(dbTicket);
     }
+
+    public Set<Ticket> findAllTicketsByStatusId(Long statusId){
+
+        return new HashSet<>(ticketRepository.findAllByTicketStatusIs(statusId));}
+
+
+    public Set<Ticket> findAllTicketsByUserId(Long id) {
+        return new HashSet<>(ticketRepository.findAllByUserIs(id));
+    }
 }
+
