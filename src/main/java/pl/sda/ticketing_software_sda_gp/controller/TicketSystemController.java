@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.sda.ticketing_software_sda_gp.model.Conversation;
 import pl.sda.ticketing_software_sda_gp.model.Message;
-import pl.sda.ticketing_software_sda_gp.model.NewTicket;
+import pl.sda.ticketing_software_sda_gp.model.TicketDTO;
 import pl.sda.ticketing_software_sda_gp.model.Ticket;
 import pl.sda.ticketing_software_sda_gp.service.ConversationService;
 import pl.sda.ticketing_software_sda_gp.service.MessageService;
@@ -45,9 +45,9 @@ public class TicketSystemController {
 
 
     @PostMapping("ticket/add")
-    public void addNewTicketAndControllerAndMessage(@RequestBody NewTicket newTicket) {
-        Ticket ticket = ticketService.createAndAddNewTicket(newTicket);
-        messageService.addMessageAndConversation(ticket, newTicket);
+    public void addNewTicketAndControllerAndMessage(@RequestBody TicketDTO ticketDTO) {
+        Ticket ticket = ticketService.createAndAddNewTicket(ticketDTO);
+        messageService.addMessageAndConversation(ticket, ticketDTO);
         System.out.println("New ticket, conversation and message were added");
     }
 

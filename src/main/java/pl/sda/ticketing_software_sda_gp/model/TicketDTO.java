@@ -1,7 +1,7 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
 //Klasa pomocnicza do parsowania danych z jsona (metoda addNewTicketAndControllerAndMessage())
-public class NewTicket {
+public class TicketDTO {
 
     public Queue queue;
     public MessageType messageType;

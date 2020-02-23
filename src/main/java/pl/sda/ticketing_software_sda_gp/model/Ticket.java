@@ -1,5 +1,6 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,12 +27,10 @@ public class Ticket {
     @ManyToOne
     private Queue queue;
 
-    public Ticket() {
-    }
-
-    public Ticket(User user, Queue queue) {
+    @Builder
+    private Ticket(User user, Status ticketStatus, Queue queue) {
         this.user = user;
-        this.ticketStatus = new Status(1L, "NEW");
+        this.ticketStatus = ticketStatus;
         this.queue = queue;
     }
 

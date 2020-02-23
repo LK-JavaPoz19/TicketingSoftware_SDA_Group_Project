@@ -22,13 +22,12 @@ public class MessageService {
     }
     public Set<Message> findAllMessages(){return new HashSet<>(messageRepository.findAll());}
 
-    public void addMessageAndConversation(Ticket ticket, NewTicket newTicket) {
+    public void addMessageAndConversation(Ticket ticket, TicketDTO ticketDTO) {
         Conversation conversation = new Conversation(ticket.getTicketId(), ticket);
         conversationRepository.save(conversation);
-        Message message = new Message(LocalDateTime.now(), conversation, newTicket.getMessageType(),
-                newTicket.getFromUser(), newTicket.getToUser(),
-                newTicket.getBody());
+        Message message = new Message(LocalDateTime.now(), conversation, ticketDTO.getMessageType(),
+                ticketDTO.getFromUser(), ticketDTO.getToUser(),
+                ticketDTO.getBody());
         messageRepository.save(message);
-
     }
 }
