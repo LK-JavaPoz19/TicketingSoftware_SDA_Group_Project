@@ -33,6 +33,7 @@ public class TicketService {
 
     public Ticket createAndAddNewTicket(TicketDTO ticketDTO) {
 
+
         Optional<Status> newStatus = statusRepository.findById(1L);
         if (newStatus.isPresent()) {
             Ticket ticket = map(ticketDTO, newStatus.get());
