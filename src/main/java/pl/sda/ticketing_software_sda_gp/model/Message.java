@@ -3,6 +3,7 @@ package pl.sda.ticketing_software_sda_gp.model;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Message {
 
     @Id
@@ -40,10 +42,6 @@ public class Message {
     @NotNull
     private String body;
 
-    public Message(){
-
-    }
-
     @Builder
     private Message(LocalDateTime created, Conversation conversation,
                    MessageType messageType, User fromUser, User toUser, String body) {
@@ -55,33 +53,5 @@ public class Message {
         this.body = body;
     }
 
-
-    public Long getMessageId() {
-        return messageId;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public Conversation getConversation() {
-        return conversation;
-    }
-
-    public MessageType getMessageType() {
-        return messageType;
-    }
-
-    public User getFromUser() {
-        return fromUser;
-    }
-
-    public User getToUser() {
-        return toUser;
-    }
-
-    public String getBody() {
-        return body;
-    }
 }
 

@@ -14,8 +14,8 @@ import static pl.sda.ticketing_software_sda_gp.mapper.MessageMapper.map;
 
 @Service
 public class MessageService {
-    MessageRepository messageRepository;
-    ConversationRepository conversationRepository;
+    private final MessageRepository messageRepository;
+    private final ConversationRepository conversationRepository;
 
     public MessageService(MessageRepository messageRepository, ConversationRepository conversationRepository) {
         this.messageRepository = messageRepository;
@@ -27,7 +27,6 @@ public class MessageService {
         Conversation conversation = new Conversation(ticket.getTicketId(), ticket);
         conversationRepository.save(conversation);
         Message message = map(conversation, ticketDTO);
-
         messageRepository.save(message);
     }
 

@@ -1,12 +1,14 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Status {
 
     @Id
@@ -18,27 +20,4 @@ public class Status {
     @Column(unique = true)
     private String statusName;
 
-    public Status() {
-    }
-
-    public Status(Long statusId, String statusName){
-        this.statusId = statusId;
-        this.statusName = statusName;
-    }
-
-    public Long getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(Long statusId) {
-        this.statusId = statusId;
-    }
-
-    public String getStatusName() {
-        return statusName;
-    }
-
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
-    }
 }

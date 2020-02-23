@@ -1,12 +1,13 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Conversation {
 
     @Id
@@ -17,20 +18,9 @@ public class Conversation {
     @OneToOne
     private Ticket ticket;
 
-    public Conversation() {
-
-    }
-
     public Conversation(Long conversationId, Ticket ticket) {
         this.conversationId = conversationId;
         this.ticket = ticket;
     }
-
-    //    @OneToMany (
-//            mappedBy = "conversation"
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true
-//    )
-//    private Set<Message> messages;
 }
 
