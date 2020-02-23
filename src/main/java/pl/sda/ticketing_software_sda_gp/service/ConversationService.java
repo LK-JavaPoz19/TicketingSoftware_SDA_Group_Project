@@ -23,4 +23,3 @@ public class ConversationService {
 
     public Set<Conversation> findAllConversations(){return new HashSet<>(conversationRepository.findAll());}
 }
-

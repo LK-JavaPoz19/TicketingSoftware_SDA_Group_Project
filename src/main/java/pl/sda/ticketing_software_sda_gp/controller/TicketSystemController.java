@@ -1,9 +1,8 @@
 package pl.sda.ticketing_software_sda_gp.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pl.sda.ticketing_software_sda_gp.model.Conversation;
 import pl.sda.ticketing_software_sda_gp.model.Message;
 import pl.sda.ticketing_software_sda_gp.model.TicketDTO;
@@ -29,17 +28,17 @@ public class TicketSystemController {
     }
 
     @GetMapping("/tickets")
-    public Set<Ticket> getAllTickets(){
+    public Set<Ticket> getAllTickets() {
         return ticketService.findAllTickets();
     }
 
     @GetMapping("/messages")
-    public Set<Message> getAllMessages(){
+    public Set<Message> getAllMessages() {
         return messageService.findAllMessages();
     }
 
     @GetMapping("/conversations")
-    public Set<Conversation> getAllConversations(){
+    public Set<Conversation> getAllConversations() {
         return conversationService.findAllConversations();
     }
 
@@ -51,4 +50,16 @@ public class TicketSystemController {
         System.out.println("New ticket, conversation and message were added");
     }
 
+    @GetMapping("tickets/{id}/messages")
+    public Set<Message> getAllMessagesForTicketByTicketId(@PathVariable Long id) {
+        return messageService.getAllMessagesForTicketByTicketId(id);
+    }
+
+    @GetMapping("/tickets/queue")
+    public ResponseEntity<Set<Ticket>> getAllTicketsFromQueueByQueueId(@RequestParam Long id) {
+        Set<Ticket> tickets = ticketService.getAllTicketsFromQueueByQueueId(id);
+        return (!tickets.isEmpty())
+                ? new ResponseEntity<>(tickets, HttpStatus.OK)
+                : ResponseEntity.notFound().build();
+    }
 }

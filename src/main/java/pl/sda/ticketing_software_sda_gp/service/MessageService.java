@@ -30,4 +30,8 @@ public class MessageService {
                 ticketDTO.getBody());
         messageRepository.save(message);
     }
+
+    public Set<Message> getAllMessagesForTicketByTicketId(Long id) {
+        return messageRepository.findAllMessagesForTicketByTicketId(id);
+    }
 }
