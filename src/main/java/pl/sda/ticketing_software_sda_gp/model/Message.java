@@ -1,7 +1,6 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
 
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -41,14 +40,11 @@ public class Message {
     private String body;
 
     public Message(){
+
     }
 
-    //to jest komentarz testowy do sprawdzenia dziania rozwizywania konfliktow
-
-    //TODO prywatny konstruktor do buildera
-
     public Message(LocalDateTime created, Conversation conversation,
-                    MessageType messageType, User fromUser, User toUser, String body) {
+                   MessageType messageType, User fromUser, User toUser, String body) {
         this.created = created;
         this.conversation = conversation;
         this.messageType = messageType;
