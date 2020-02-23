@@ -42,6 +42,17 @@ public class TicketSystemController {
         return conversationService.findAllConversations();
     }
 
+    @GetMapping(value = "ticketsByStatus/{id}")
+    public Set<Ticket> filterTicketsByStatus(@PathVariable Long id) {
+
+        return ticketService.findAllTicketsByStatusId(id);
+    }
+
+    @GetMapping(value = "ticketsByUser/{id}")
+    public Set<Ticket> filterTicketsByUser(@PathVariable Long id) {
+
+        return ticketService.findAllTicketsByUserId(id);
+    }
 
     @PostMapping("ticket/add")
     public void addNewTicketAndControllerAndMessage(@RequestBody TicketDTO ticketDTO) {
@@ -62,4 +73,9 @@ public class TicketSystemController {
                 ? new ResponseEntity<>(tickets, HttpStatus.OK)
                 : ResponseEntity.notFound().build();
     }
+    @GetMapping(value = "ticketsByQueueByStatus/{idQueue}/{idStatus}")
+    public Set<Ticket> filterTicketsByQueueAndStatus(@PathVariable Long idQueue,@PathVariable Long idStatus) {
+        return ticketService.findAllTicketsByQueueAndStatus(idQueue,idStatus);
+    }
+
 }
