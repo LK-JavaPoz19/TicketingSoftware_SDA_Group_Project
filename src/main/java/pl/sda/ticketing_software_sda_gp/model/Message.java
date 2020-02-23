@@ -1,6 +1,7 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -43,7 +44,8 @@ public class Message {
 
     }
 
-    public Message(LocalDateTime created, Conversation conversation,
+    @Builder
+    private Message(LocalDateTime created, Conversation conversation,
                    MessageType messageType, User fromUser, User toUser, String body) {
         this.created = created;
         this.conversation = conversation;
@@ -52,6 +54,7 @@ public class Message {
         this.toUser = toUser;
         this.body = body;
     }
+
 
     public Long getMessageId() {
         return messageId;

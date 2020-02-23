@@ -7,9 +7,10 @@ import pl.sda.ticketing_software_sda_gp.model.*;
 import pl.sda.ticketing_software_sda_gp.repository.ConversationRepository;
 import pl.sda.ticketing_software_sda_gp.repository.MessageRepository;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
+import static pl.sda.ticketing_software_sda_gp.mapper.MessageMapper.map;
 
 @Service
 public class MessageService {
@@ -25,9 +26,9 @@ public class MessageService {
     public void addMessageAndConversation(Ticket ticket, TicketDTO ticketDTO) {
         Conversation conversation = new Conversation(ticket.getTicketId(), ticket);
         conversationRepository.save(conversation);
-        Message message = new Message(LocalDateTime.now(), conversation, ticketDTO.getMessageType(),
-                ticketDTO.getFromUser(), ticketDTO.getToUser(),
-                ticketDTO.getBody());
+        Message message = map(conversation, ticketDTO);
+
         messageRepository.save(message);
     }
+
 }
