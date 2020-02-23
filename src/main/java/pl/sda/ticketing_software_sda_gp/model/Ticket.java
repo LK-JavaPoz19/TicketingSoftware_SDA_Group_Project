@@ -1,7 +1,9 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,6 +16,9 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     private Long ticketId;
+
+    public Ticket() {
+    }
 
     @NotNull
     @OneToOne

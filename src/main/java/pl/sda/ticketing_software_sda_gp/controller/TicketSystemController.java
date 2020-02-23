@@ -1,9 +1,6 @@
 package pl.sda.ticketing_software_sda_gp.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.sda.ticketing_software_sda_gp.model.Conversation;
 import pl.sda.ticketing_software_sda_gp.model.Message;
 import pl.sda.ticketing_software_sda_gp.model.TicketDTO;
@@ -43,6 +40,17 @@ public class TicketSystemController {
         return conversationService.findAllConversations();
     }
 
+    @GetMapping(value = "ticketsByStatus/{id}")
+    public Set<Ticket> filterTicketsByStatus(@PathVariable Long id) {
+
+        return ticketService.findAllTicketsByStatusId(id);
+    }
+
+    @GetMapping(value = "ticketsByUser/{id}")
+    public Set<Ticket> filterTicketsByUser(@PathVariable Long id) {
+
+        return ticketService.findAllTicketsByUserId(id);
+    }
 
     @PostMapping("ticket/add")
     public void addNewTicketAndControllerAndMessage(@RequestBody TicketDTO ticketDTO) {
@@ -50,5 +58,6 @@ public class TicketSystemController {
         messageService.addMessageAndConversation(ticket, ticketDTO);
         System.out.println("New ticket, conversation and message were added");
     }
+
 
 }
