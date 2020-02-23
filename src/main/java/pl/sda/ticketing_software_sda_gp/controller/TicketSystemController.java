@@ -59,5 +59,9 @@ public class TicketSystemController {
         System.out.println("New ticket, conversation and message were added");
     }
 
+    @GetMapping(value = "ticketsByQueueByStatus/{idQueue}/{idStatus}")
+    public Set<Ticket> filterTicketsByQueueAndStatus(@PathVariable Long idQueue,@PathVariable Long idStatus) {
+        return ticketService.findAllTicketsByQueueAndStatus(idQueue,idStatus);
+    }
 
 }

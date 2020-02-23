@@ -47,5 +47,9 @@ public class TicketService {
     public Set<Ticket> findAllTicketsByUserId(Long id) {
         return new HashSet<>(ticketRepository.findAllByUserIs(id));
     }
+
+    public Set<Ticket> findAllTicketsByQueueAndStatus(Long idQueue, Long idStatus) {
+        return new HashSet<>(ticketRepository.findAllByQueueAndAndTicketStatusIs(idQueue,idStatus));
+    }
 }
 
