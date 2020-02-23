@@ -15,4 +15,7 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
 
     @Query("select u from Ticket u where u.user.userId = :userId")
     Set<Ticket> findAllByUserIs(Long userId);
+
+    @Query("select u from Ticket u where u.queue.queueId = :queueId and u.ticketStatus.statusId = :statusId")
+    Set<Ticket> findAllByQueueAndAndTicketStatusIs(Long queueId, Long statusId);
 }
