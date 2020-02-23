@@ -26,4 +26,6 @@ public class User {
     @NotNull
     @ManyToOne
     private UserType userType;
+
+
 }

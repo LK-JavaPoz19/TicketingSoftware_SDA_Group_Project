@@ -38,5 +38,47 @@ public class Message {
 
     @NotNull
     private String body;
+
+    public Message(){
+
+    }
+
+    public Message(LocalDateTime created, Conversation conversation,
+                   MessageType messageType, User fromUser, User toUser, String body) {
+        this.created = created;
+        this.conversation = conversation;
+        this.messageType = messageType;
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+        this.body = body;
+    }
+
+    public Long getMessageId() {
+        return messageId;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public Conversation getConversation() {
+        return conversation;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public User getFromUser() {
+        return fromUser;
+    }
+
+    public User getToUser() {
+        return toUser;
+    }
+
+    public String getBody() {
+        return body;
+    }
 }
 

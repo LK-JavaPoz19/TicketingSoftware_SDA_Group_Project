@@ -1,0 +1,15 @@
+{
+  "queue": {
+    "queueId": 2
+  },
+  "messageType" : {
+    "messageTypeId": 2
+  },
+  "fromUser": {
+    "userId": 7
+  },
+  "toUser": {
+    "userId": 1
+  },
+  "body": "Wiadomość testowa..."
+}
