@@ -12,13 +12,13 @@ public class MessageMapper {
         this.ticketDTO = ticketDTO;
     }
 
-    public static Message map(Conversation conversation, TicketDTO ticketDTO) {
+    public static Message map(Conversation conversation, TicketDTO ticketDTO, User userTo) {
         return Message.builder()
                 .created(LocalDateTime.now())
                 .conversation(conversation)
                 .messageType(ticketDTO.getMessageType())
                 .fromUser(ticketDTO.getFromUser())
-                .toUser(ticketDTO.getToUser())
+                .toUser(userTo)
                 .body(ticketDTO.getBody())
                 .build();
     }

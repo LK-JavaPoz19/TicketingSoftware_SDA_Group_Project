@@ -8,7 +8,6 @@ public class TicketDTO {
     public Queue queue;
     public MessageType messageType;
     public User fromUser;
-    public User toUser;
     public String body;
 
 }
