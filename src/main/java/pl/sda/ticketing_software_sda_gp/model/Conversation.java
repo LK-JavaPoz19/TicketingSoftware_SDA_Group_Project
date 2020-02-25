@@ -2,7 +2,6 @@ package pl.sda.ticketing_software_sda_gp.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Data
