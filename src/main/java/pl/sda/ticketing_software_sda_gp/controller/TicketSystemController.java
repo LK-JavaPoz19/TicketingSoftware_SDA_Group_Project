@@ -1,5 +1,7 @@
 package pl.sda.ticketing_software_sda_gp.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.sda.ticketing_software_sda_gp.model.Conversation;
 import pl.sda.ticketing_software_sda_gp.model.Message;
@@ -53,10 +55,9 @@ public class TicketSystemController {
     }
 
     @PostMapping("ticket/add")
-    public void addNewTicketAndControllerAndMessage(@RequestBody TicketDTO ticketDTO) {
-        Ticket ticket = ticketService.createAndAddNewTicket(ticketDTO);
-        messageService.addMessageAndConversation(ticket, ticketDTO);
-        System.out.println("New ticket, conversation and message were added");
+    public ResponseEntity<Ticket> addNewTicket(@RequestBody TicketDTO ticketDTO) {
+        Ticket ticket = ticketService.createTicket(ticketDTO);
+        return new ResponseEntity<>(ticket, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "ticketsByQueueByStatus/{idQueue}/{idStatus}")

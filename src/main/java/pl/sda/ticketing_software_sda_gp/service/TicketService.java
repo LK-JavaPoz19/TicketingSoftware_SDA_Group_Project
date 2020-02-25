@@ -18,11 +18,15 @@ import static pl.sda.ticketing_software_sda_gp.mapper.TicketMapper.map;
 
 @Service
 public class TicketService {
-    TicketRepository ticketRepository;
-    StatusRepository statusRepository;
-    QueueRepository queueRepository;
 
-    public TicketService(TicketRepository ticketRepository, StatusRepository statusRepository, QueueRepository queueRepository) {
+    private final MessageService messageService;
+    private final TicketRepository ticketRepository;
+    private final StatusRepository statusRepository;
+    private final QueueRepository queueRepository;
+
+    public TicketService(MessageService messageService, TicketRepository ticketRepository,
+                         StatusRepository statusRepository, QueueRepository queueRepository) {
+        this.messageService = messageService;
         this.ticketRepository = ticketRepository;
         this.statusRepository = statusRepository;
         this.queueRepository = queueRepository;
@@ -32,11 +36,13 @@ public class TicketService {
         return new HashSet<>(ticketRepository.findAll());
     }
 
-    public Ticket createAndAddNewTicket(TicketDTO ticketDTO) {
+    public Ticket createTicket(TicketDTO ticketDTO) {
         Ticket dbTicket = statusRepository.findById(1L)
                 .map(status -> map(ticketDTO, status))
                 .orElseThrow(() -> new StatusNotFoundException("Status not found."));
-        return ticketRepository.save(dbTicket);
+        Ticket ticket = ticketRepository.save(dbTicket);
+        messageService.addMessageAndConversation(ticket, ticketDTO);
+        return ticket;
     }
 
     public Set<Ticket> findAllTicketsByStatusId(Long statusId){
