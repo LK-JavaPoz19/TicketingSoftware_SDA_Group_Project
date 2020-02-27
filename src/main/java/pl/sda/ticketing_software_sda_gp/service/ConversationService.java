@@ -12,6 +12,7 @@ import pl.sda.ticketing_software_sda_gp.repository.*;
 import java.util.Set;
 
 import static pl.sda.ticketing_software_sda_gp.mapper.MessageMapper.mapInitialMessage;
+import static pl.sda.ticketing_software_sda_gp.service.ServiceUtility.findElementOrThrowException;
 
 @Service
 public class ConversationService {
@@ -37,14 +38,14 @@ public class ConversationService {
     }
 
     public void addConversationAndFirstMessageForNewTicket(Ticket ticket, NewTicketDTO DTO) {
-        queueRepository.findById(DTO.getQueue().getQueueId())
-                .orElseThrow(() -> new QueueNotFoundException("Queue with a provided ID does not exist."));
-        messageTypeRepository.findById(DTO.getMessageType().getMessageTypeId())
-                .orElseThrow(() -> new MessageTypeNotFound("Message with a provided ID does not exist."));
+        findElementOrThrowException(queueRepository, DTO.getQueue().getQueueId(),
+                new QueueNotFoundException("Queue with a provided ID does not exist."));
+        findElementOrThrowException(messageTypeRepository, DTO.getMessageType().getMessageTypeId(),
+                new MessageTypeNotFound("Message type with a provided ID does not exist."));
         Conversation conversation = conversationRepository.save(new Conversation(ticket));
 
-        userRepository.findById(DTO.getFromUser().getUserId())
-                .orElseThrow(() -> new UserNotFoundException("Message sender with a provided does not exist."));
+        findElementOrThrowException(userRepository, DTO.getFromUser().getUserId(),
+                new UserNotFoundException("Message sender with a provided does not exist."));
         messageRepository.save(mapInitialMessage(DTO, conversation, ticket.getUser()));
     }
 

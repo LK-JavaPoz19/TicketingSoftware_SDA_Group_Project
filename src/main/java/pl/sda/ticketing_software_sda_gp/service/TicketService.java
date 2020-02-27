@@ -57,11 +57,13 @@ public class TicketService {
     }
 
     public Ticket createNewTicket(NewTicketDTO DTO) {
-        Status newStatus = statusRepository.findById(1L)
-                .orElseThrow(() -> new StatusNotFoundException("New ticket status not initialized."));
-        User general = userRepository.findById(1L)
-                .orElseThrow(() -> new UserNotFoundException("General recipient not initialized."));
-        return ticketRepository.save(mapNewTicket(DTO, newStatus, general));
+        Status newStatus = findElementOrThrowException(statusRepository, 1L,
+                new StatusNotFoundException("New ticket status not initialized."));
+        User general = findElementOrThrowException(userRepository, 1L,
+                new UserNotFoundException("General recipient not initialized."));
+        Queue queue = findElementOrThrowException(queueRepository, DTO.getQueue().getQueueId(),
+                new QueueNotFoundException("Queue with a provided ID does not exist."));
+        return ticketRepository.save(mapNewTicket(queue, newStatus, general));
     }
 
     public void setTicketStatus(Long id, Long status) {
