@@ -1,7 +1,9 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -9,10 +11,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Entity
 public class Ticket {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false)
     private Long ticketId;
 
     @NotNull
@@ -21,10 +22,12 @@ public class Ticket {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Status ticketStatus;
 
     @NotNull
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Queue queue;
 
     @Builder

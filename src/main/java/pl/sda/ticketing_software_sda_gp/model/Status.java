@@ -7,17 +7,15 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
-@Entity
 @NoArgsConstructor
+@Entity
 public class Status {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false)
     private Long statusId;
 
     @NotNull
-    @Column(unique = true)
+    @Column(nullable =false, unique = true)
     private String statusName;
-
 }

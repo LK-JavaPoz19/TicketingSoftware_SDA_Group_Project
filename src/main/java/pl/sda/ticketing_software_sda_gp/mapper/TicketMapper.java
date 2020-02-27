@@ -1,22 +1,16 @@
 package pl.sda.ticketing_software_sda_gp.mapper;
 
-import pl.sda.ticketing_software_sda_gp.exception.StatusNotFoundException;
-import pl.sda.ticketing_software_sda_gp.model.*;
-import pl.sda.ticketing_software_sda_gp.repository.StatusRepository;
-
-import java.util.Optional;
+import pl.sda.ticketing_software_sda_gp.model.Queue;
+import pl.sda.ticketing_software_sda_gp.model.Status;
+import pl.sda.ticketing_software_sda_gp.model.Ticket;
+import pl.sda.ticketing_software_sda_gp.model.User;
 
 public class TicketMapper {
 
-    private TicketDTO ticketDTO;
-
-    public TicketMapper(TicketDTO ticketDTO) {
-        this.ticketDTO = ticketDTO;
-    }
-    public static Ticket map(TicketDTO ticketDTO, Status status) {
+    public static Ticket mapNewTicket(Queue queue, Status status, User user) {
         return Ticket.builder()
-                .queue(ticketDTO.getQueue())
-                .user(ticketDTO.getFromUser())
+                .queue(queue)
+                .user(user)
                 .ticketStatus(status)
                 .build();
     }

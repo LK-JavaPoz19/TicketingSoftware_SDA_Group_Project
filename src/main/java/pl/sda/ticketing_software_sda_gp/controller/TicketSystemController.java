@@ -3,14 +3,12 @@ package pl.sda.ticketing_software_sda_gp.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.sda.ticketing_software_sda_gp.model.Conversation;
-import pl.sda.ticketing_software_sda_gp.model.Message;
-import pl.sda.ticketing_software_sda_gp.model.TicketDTO;
-import pl.sda.ticketing_software_sda_gp.model.Ticket;
+import pl.sda.ticketing_software_sda_gp.model.*;
 import pl.sda.ticketing_software_sda_gp.service.ConversationService;
 import pl.sda.ticketing_software_sda_gp.service.MessageService;
 import pl.sda.ticketing_software_sda_gp.service.TicketService;
 
+import javax.transaction.Transactional;
 import java.util.Set;
 
 @RestController
@@ -27,42 +25,63 @@ public class TicketSystemController {
         this.conversationService = conversationService;
     }
 
-    @GetMapping("/tickets")
-    public Set<Ticket> getAllTickets(){
-        return ticketService.findAllTickets();
-    }
-
-    @GetMapping("/messages")
-    public Set<Message> getAllMessages(){
-        return messageService.findAllMessages();
+    @GetMapping(value = "/tickets")
+    public ResponseEntity<Set<Ticket>> getAllOrFilteredTickets (@RequestParam(required = false) Long user,
+                                                                @RequestParam(required = false) Long queue,
+                                                                @RequestParam(required = false) Long status) {
+        return new ResponseEntity<>(ticketService.getAllOrFilteredTickets(user, queue, status), HttpStatus.OK);
     }
 
     @GetMapping("/conversations")
-    public Set<Conversation> getAllConversations(){
-        return conversationService.findAllConversations();
+    public ResponseEntity<Set<Conversation>> getAllOrFilteredConversations(@RequestParam(required = false) Long conversation) {
+        return new ResponseEntity<>(conversationService.findAllOrFilteredConversations(conversation), HttpStatus.OK);
     }
 
-    @GetMapping(value = "ticketsByStatus/{id}")
-    public Set<Ticket> filterTicketsByStatus(@PathVariable Long id) {
-
-        return ticketService.findAllTicketsByStatusId(id);
+    @GetMapping("/messages")
+    public ResponseEntity<Set<Message>> getAllOrFilteredMessages(@RequestParam(required = false) Long conversation) {
+        return new ResponseEntity<>(messageService.findAllOrFilteredMessages(conversation), HttpStatus.OK);
     }
 
-    @GetMapping(value = "ticketsByUser/{id}")
-    public Set<Ticket> filterTicketsByUser(@PathVariable Long id) {
-
-        return ticketService.findAllTicketsByUserId(id);
+    @GetMapping("/tickets/{id}/conversations")
+    public ResponseEntity<Conversation> getConversationsByTicketId(@PathVariable Long id) {
+        return new ResponseEntity<>(conversationService.getConversationsByTicketId(id), HttpStatus.OK);
     }
 
-    @PostMapping("ticket/add")
-    public ResponseEntity<Ticket> addNewTicket(@RequestBody TicketDTO ticketDTO) {
-        Ticket ticket = ticketService.createTicket(ticketDTO);
+    @Transactional
+    @PostMapping("/queues")
+    public ResponseEntity<Queue> createNewQueue(@RequestBody NewQueueDTO DTO) {
+        return new ResponseEntity<>(ticketService.createNewQueue(DTO), HttpStatus.CREATED);
+    }
+
+    @Transactional
+    @PostMapping("/tickets")
+    public ResponseEntity<Ticket> createNewTicket(@RequestBody NewTicketDTO DTO) {
+            Ticket ticket = ticketService.createNewTicket(DTO);
+            conversationService.addConversationAndFirstMessageForNewTicket(ticket, DTO);
         return new ResponseEntity<>(ticket, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "ticketsByQueueByStatus/{idQueue}/{idStatus}")
-    public Set<Ticket> filterTicketsByQueueAndStatus(@PathVariable Long idQueue,@PathVariable Long idStatus) {
-        return ticketService.findAllTicketsByQueueAndStatus(idQueue,idStatus);
+    @Transactional
+    @PostMapping("/conversations/{id}")
+    public ResponseEntity<Message> createNewMessageInConversation(@PathVariable Long id, NewMessageDTO DTO) {
+        return new ResponseEntity<>(messageService.createNewMessageInConversation(id, DTO), HttpStatus.OK);
     }
 
+    @PutMapping(value = "/tickets/{id}/set-status-to-{status}")
+    public ResponseEntity<?> updateTicketStatus(@PathVariable Long id, @PathVariable Long status) {
+        ticketService.setTicketStatus(id, status);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/tickets/{id}/set-queue-to-{queue}")
+    public ResponseEntity<?> putTicketInQueue(@PathVariable Long id, @PathVariable Long queue) {
+        ticketService.setTicketQueue(id, queue);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/tickets/{id}/set-assignee-to-{user}")
+    public ResponseEntity<?> updateTicketAssignee(@PathVariable Long id, @PathVariable Long user) {
+        ticketService.setTicketAssignee(id, user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
