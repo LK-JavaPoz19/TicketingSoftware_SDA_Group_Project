@@ -3,13 +3,13 @@ INSERT INTO user_type (user_type_name) VALUES ('consultant');
 INSERT INTO user_type (user_type_name) VALUES ('client');
 INSERT INTO user_type (user_type_name) VALUES ('team_leader');
 
-INSERT INTO `user` (username, password, user_type_id) VALUES ('gen_recipient', '#', 1);
-INSERT INTO `user` (username, password, user_type_id) VALUES ('a', '#', 2);
-INSERT INTO `user` (username, password, user_type_id) VALUES ('b', '#', 2);
-INSERT INTO `user` (username, password, user_type_id) VALUES ('c', '#', 3);
-INSERT INTO `user` (username, password, user_type_id) VALUES ('d', '#', 3);
-INSERT INTO `user` (username, password, user_type_id) VALUES ('x', '#', 4);
-INSERT INTO `user` (username, password, user_type_id) VALUES ('y', '#', 4);
+INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('gen_recipient', '#', 1);
+INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('a', '#', 2);
+INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('b', '#', 2);
+INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('c', '#', 3);
+INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('d', '#', 3);
+INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('x', '#', 4);
+INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('y', '#', 4);
 
 
 INSERT INTO status (status_name) VALUES ('NEW');

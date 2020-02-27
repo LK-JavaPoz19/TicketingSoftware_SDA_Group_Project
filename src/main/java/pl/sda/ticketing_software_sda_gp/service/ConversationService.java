@@ -1,25 +1,54 @@
 package pl.sda.ticketing_software_sda_gp.service;
 
-
 import org.springframework.stereotype.Service;
+import pl.sda.ticketing_software_sda_gp.exception.MessageTypeNotFound;
+import pl.sda.ticketing_software_sda_gp.exception.QueueNotFoundException;
+import pl.sda.ticketing_software_sda_gp.exception.UserNotFoundException;
 import pl.sda.ticketing_software_sda_gp.model.Conversation;
-import pl.sda.ticketing_software_sda_gp.repository.ConversationRepository;
-import pl.sda.ticketing_software_sda_gp.repository.MessageRepository;
+import pl.sda.ticketing_software_sda_gp.model.NewTicketDTO;
+import pl.sda.ticketing_software_sda_gp.model.Ticket;
+import pl.sda.ticketing_software_sda_gp.repository.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
+import static pl.sda.ticketing_software_sda_gp.mapper.MessageMapper.mapInitialMessage;
 
 @Service
 public class ConversationService {
-
     private final ConversationRepository conversationRepository;
     private final MessageRepository messageRepository;
+    private final MessageTypeRepository messageTypeRepository;
+    private final QueueRepository queueRepository;
+    private final UserRepository userRepository;
 
-    public ConversationService(ConversationRepository conversationRepository, MessageRepository messageRepository) {
+    public ConversationService(ConversationRepository conversationRepository, MessageRepository messageRepository,
+                               MessageTypeRepository messageTypeRepository, QueueRepository queueRepository,
+                               UserRepository userRepository) {
         this.conversationRepository = conversationRepository;
         this.messageRepository = messageRepository;
+        this.messageTypeRepository = messageTypeRepository;
+        this.queueRepository = queueRepository;
+        this.userRepository = userRepository;
     }
 
-    public Set<Conversation> findAllConversations(){return new HashSet<>(conversationRepository.findAll());}
+    public Set<Conversation> findAllOrFilteredConversations(Long id) {
+        if (id == null) return conversationRepository.findAllConversations();
+        else return conversationRepository.findAllConversationsById(id);
+    }
+
+    public void addConversationAndFirstMessageForNewTicket(Ticket ticket, NewTicketDTO DTO) {
+        queueRepository.findById(DTO.getQueue().getQueueId())
+                .orElseThrow(() -> new QueueNotFoundException("Queue with a provided ID does not exist."));
+        messageTypeRepository.findById(DTO.getMessageType().getMessageTypeId())
+                .orElseThrow(() -> new MessageTypeNotFound("Message with a provided ID does not exist."));
+        Conversation conversation = conversationRepository.save(new Conversation(ticket));
+
+        userRepository.findById(DTO.getFromUser().getUserId())
+                .orElseThrow(() -> new UserNotFoundException("Message sender with a provided does not exist."));
+        messageRepository.save(mapInitialMessage(DTO, conversation, ticket.getUser()));
+    }
+
+    public Conversation getConversationsByTicketId(Long ticket) {
+        return conversationRepository.findConversationsByTicketId(ticket);
+    }
 }
