@@ -1,7 +1,7 @@
 package pl.sda.ticketing_software_sda_gp.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.sda.ticketing_software_sda_gp.exception.NotFoundException;
+import pl.sda.ticketing_software_sda_gp.exception.ResourceNotFoundException;
 
 import java.util.Set;
 
@@ -13,8 +13,7 @@ public class ServiceUtility {
         return resultSet;
     }
 
-    static <O, E extends NotFoundException> O findElementOrThrowException(JpaRepository<O, Long> repository,
-                                                                          Long id, E exception) {
-        return repository.findById(id).orElseThrow(() -> exception);
+    static <O> O findElementOrThrowException(JpaRepository<O, Long> repository, Long id, String exMessage) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(exMessage));
     }
 }

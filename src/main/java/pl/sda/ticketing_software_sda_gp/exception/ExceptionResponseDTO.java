@@ -9,5 +9,7 @@ import lombok.Setter;
 @Builder
 public class ExceptionResponseDTO {
     private String status;
+    private String reason;
+    private String type;
     private String message;
 }

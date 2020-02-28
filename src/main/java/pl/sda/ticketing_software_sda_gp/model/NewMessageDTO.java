@@ -6,9 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NewMessageDTO {
-    private Conversation conversation;
-    private MessageType messageType;
-    private User fromUser;
-    private User toUser;
+    private Long messageType;
+    private Long fromUser;
+    private Long toUser;
     private String body;
 }

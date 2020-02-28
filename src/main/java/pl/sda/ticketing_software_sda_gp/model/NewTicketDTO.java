@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NewTicketDTO {
-    private Queue queue;
-    private MessageType messageType;
-    private User fromUser;
+    private Long queue;
+    private Long messageType;
+    private Long fromUser;
     private String body;
 }

@@ -8,7 +8,6 @@ import pl.sda.ticketing_software_sda_gp.service.ConversationService;
 import pl.sda.ticketing_software_sda_gp.service.MessageService;
 import pl.sda.ticketing_software_sda_gp.service.TicketService;
 
-import javax.transaction.Transactional;
 import java.util.Set;
 
 @RestController
@@ -47,35 +46,30 @@ public class TicketSystemController {
         return new ResponseEntity<>(conversationService.getConversationsByTicketId(id), HttpStatus.OK);
     }
 
-    @Transactional
-    @PostMapping("/queues")
-    public ResponseEntity<Queue> createNewQueue(@RequestBody NewQueueDTO DTO) {
+    @PostMapping("/queues") //TODO:zmienić na PUT i zwracać kod w zależności od tego czy istnieje czy nie
+    public ResponseEntity<Queue> createNewQueue(@RequestBody Queue DTO) {
         return new ResponseEntity<>(ticketService.createNewQueue(DTO), HttpStatus.CREATED);
     }
 
-    @Transactional
     @PostMapping("/tickets")
     public ResponseEntity<Ticket> createNewTicket(@RequestBody NewTicketDTO DTO) {
-            Ticket ticket = ticketService.createNewTicket(DTO);
-            conversationService.addConversationAndFirstMessageForNewTicket(ticket, DTO);
-        return new ResponseEntity<>(ticket, HttpStatus.CREATED);
+        return new ResponseEntity<>(ticketService.createNewTicket(DTO), HttpStatus.CREATED);
     }
 
-    @Transactional
     @PostMapping("/conversations/{id}")
-    public ResponseEntity<Message> createNewMessageInConversation(@PathVariable Long id, NewMessageDTO DTO) {
+    public ResponseEntity<Message> createNewMessageInConversation(@PathVariable Long id, @RequestBody NewMessageDTO DTO) {
         return new ResponseEntity<>(messageService.createNewMessageInConversation(id, DTO), HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/tickets/{id}/set-status-to-{status}")
-    public ResponseEntity<?> updateTicketStatus(@PathVariable Long id, @PathVariable Long status) {
-        ticketService.setTicketStatus(id, status);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(value = "/tickets/{id}/set-queue-to-{queue}")
     public ResponseEntity<?> putTicketInQueue(@PathVariable Long id, @PathVariable Long queue) {
         ticketService.setTicketQueue(id, queue);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/tickets/{id}/set-status-to-{status}")
+    public ResponseEntity<?> updateTicketStatus(@PathVariable Long id, @PathVariable Long status) {
+        ticketService.setTicketStatus(id, status);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -9,20 +9,16 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @RestControllerAdvice
 public class GlobalHandler extends ResponseEntityExceptionHandler {
-
-    @ExceptionHandler(value = {
-            NotFoundException.class,
-            UserNotFoundException.class,
-            StatusNotFoundException.class,
-            QueueNotFoundException.class,
-            MessageTypeNotFound.class})
-    protected ResponseEntity<?> handleException(NotFoundException e, WebRequest request) {
+    @ExceptionHandler(value = ResourceNotFoundException.class)
+    protected ResponseEntity<?> handleException(ResourceNotFoundException e, WebRequest request) {
         return handleExceptionInternal(e, buildExceptionResponse(e), null, HttpStatus.NOT_FOUND, request);
     }
 
     private ExceptionResponseDTO buildExceptionResponse(RuntimeException e) {
         return ExceptionResponseDTO.builder()
-                .status("ERROR")
+                .status("FAILED")
+                .reason("EXCEPTION")
+                .type(e.getClass().getSimpleName())
                 .message(e.getMessage())
                 .build();
     }

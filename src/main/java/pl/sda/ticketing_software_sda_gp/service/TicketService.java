@@ -1,9 +1,8 @@
 package pl.sda.ticketing_software_sda_gp.service;
 
 import org.springframework.stereotype.Service;
-import pl.sda.ticketing_software_sda_gp.exception.QueueNotFoundException;
-import pl.sda.ticketing_software_sda_gp.exception.StatusNotFoundException;
-import pl.sda.ticketing_software_sda_gp.exception.UserNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
+import pl.sda.ticketing_software_sda_gp.exception.ResourceNotFoundException;
 import pl.sda.ticketing_software_sda_gp.model.*;
 import pl.sda.ticketing_software_sda_gp.repository.QueueRepository;
 import pl.sda.ticketing_software_sda_gp.repository.StatusRepository;
@@ -13,23 +12,26 @@ import pl.sda.ticketing_software_sda_gp.repository.UserRepository;
 import java.util.HashSet;
 import java.util.Set;
 
-import static pl.sda.ticketing_software_sda_gp.mapper.TicketMapper.mapNewTicket;
+import static pl.sda.ticketing_software_sda_gp.mapper.TicketMapper.map;
 import static pl.sda.ticketing_software_sda_gp.service.ServiceUtility.addElementsOrFindIntersection;
 import static pl.sda.ticketing_software_sda_gp.service.ServiceUtility.findElementOrThrowException;
 
 @Service
 public class TicketService {
+    ConversationService conversationService;
     private final TicketRepository ticketRepository;
     private final StatusRepository statusRepository;
     private final QueueRepository queueRepository;
     private final UserRepository userRepository;
 
     public TicketService(TicketRepository ticketRepository, StatusRepository statusRepository,
-                         QueueRepository queueRepository, UserRepository userRepository) {
+                         QueueRepository queueRepository, UserRepository userRepository,
+                         ConversationService conversationService) {
         this.ticketRepository = ticketRepository;
         this.statusRepository = statusRepository;
         this.queueRepository = queueRepository;
         this.userRepository = userRepository;
+        this.conversationService = conversationService;
     }
 
     public Set<Ticket> getAllOrFilteredTickets(Long user, Long queue, Long status) {
@@ -38,50 +40,47 @@ public class TicketService {
         else {
             Set<Ticket> tickets = new HashSet<>();
             if (user != null) {
-                findElementOrThrowException(userRepository, user,
-                        new UserNotFoundException("User with a provided ID does not exist."));
+                findElementOrThrowException(userRepository, user, "User with a provided ID does not exist.");
                 addElementsOrFindIntersection(ticketRepository.findAllTicketsByUserId(user), tickets);
             }
             if (queue != null) {
-                findElementOrThrowException(queueRepository, queue,
-                        new QueueNotFoundException("Queue with a provided ID does not exist."));
+                findElementOrThrowException(queueRepository, queue, "Queue with a provided ID does not exist.");
                 addElementsOrFindIntersection(ticketRepository.findAllTicketsByQueueId(queue), tickets);
             }
             if (status != null) {
-                findElementOrThrowException(statusRepository, status,
-                        new StatusNotFoundException("Status with a provided ID does not exist."));
+                findElementOrThrowException(statusRepository, status, "Status with a provided ID does not exist.");
                 addElementsOrFindIntersection(ticketRepository.findAllTicketsByStatusId(status), tickets);
             }
             return tickets;
         }
     }
 
+    @Transactional
     public Ticket createNewTicket(NewTicketDTO DTO) {
-        Status newStatus = findElementOrThrowException(statusRepository, 1L,
-                new StatusNotFoundException("New ticket status not initialized."));
-        User general = findElementOrThrowException(userRepository, 1L,
-                new UserNotFoundException("General recipient not initialized."));
-        Queue queue = findElementOrThrowException(queueRepository, DTO.getQueue().getQueueId(),
-                new QueueNotFoundException("Queue with a provided ID does not exist."));
-        return ticketRepository.save(mapNewTicket(queue, newStatus, general));
+        Ticket ticket = ticketRepository.save(map(
+                findElementOrThrowException(queueRepository, DTO.getQueue(), "Queue with a provided ID does not exist."),
+                findElementOrThrowException(statusRepository, 1L, "NEW ticket status not found."),
+                findElementOrThrowException(userRepository, 1L, "General recipient not found.")));
+        conversationService.addConversationAndFirstMessageForNewTicket(ticket, DTO);
+        return ticket;
     }
 
     public void setTicketStatus(Long id, Long status) {
         ticketRepository.updateTicketStatus(id, statusRepository.findById(status)
-                .orElseThrow(() -> new StatusNotFoundException("Status with a given ID does not exist (yet).")));
+                .orElseThrow(() -> new ResourceNotFoundException("Status with a provided ID does not exist.")));
     }
 
     public void setTicketQueue(Long id, Long queue) {
         ticketRepository.updateTicketQueue(id, queueRepository.findById(queue)
-                .orElseThrow(() -> new QueueNotFoundException(("Queue with a given ID does not exist (yet)."))));
+                .orElseThrow(() -> new ResourceNotFoundException("Queue with a provided ID does not exist.")));
     }
 
     public void setTicketAssignee(Long id, Long user) {
         ticketRepository.updateTicketAssignee(id, userRepository.findById(user)
-                .orElseThrow(() -> new UserNotFoundException("User with a provided ID does not exist.")));
+                .orElseThrow(() -> new ResourceNotFoundException("User with a provided ID does not exist.")));
     }
 
-    public Queue createNewQueue(NewQueueDTO DTO) {
-        return queueRepository.save(new Queue(DTO.getName()));
+    public Queue createNewQueue(Queue DTO) {
+        return queueRepository.save(DTO);
     }
 }

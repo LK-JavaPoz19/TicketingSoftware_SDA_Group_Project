@@ -7,7 +7,7 @@ import pl.sda.ticketing_software_sda_gp.model.User;
 
 public class TicketMapper {
 
-    public static Ticket mapNewTicket(Queue queue, Status status, User user) {
+    public static Ticket map(Queue queue, Status status, User user) {
         return Ticket.builder()
                 .queue(queue)
                 .user(user)
