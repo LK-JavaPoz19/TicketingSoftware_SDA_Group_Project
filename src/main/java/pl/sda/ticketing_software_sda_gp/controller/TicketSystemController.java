@@ -1,6 +1,9 @@
 package pl.sda.ticketing_software_sda_gp.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.sda.ticketing_software_sda_gp.model.*;
 import pl.sda.ticketing_software_sda_gp.model.Conversation;
 import pl.sda.ticketing_software_sda_gp.model.Message;
 import pl.sda.ticketing_software_sda_gp.model.ModelDTO;
@@ -27,34 +30,59 @@ public class TicketSystemController {
 
     @CrossOrigin
     @GetMapping("/tickets")
-    public Set<Ticket> getAllTickets(){
-        return ticketService.findAllTickets();
+    public ResponseEntity<Set<Ticket>> getAllOrFilteredTickets (@RequestParam(required = false) Long user,
+                                                                @RequestParam(required = false) Long queue,
+                                                                @RequestParam(required = false) Long status) {
+        return new ResponseEntity<>(ticketService.getAllOrFilteredTickets(user, queue, status), HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @GetMapping("/conversations/{id}")
+    public ResponseEntity<Set<Conversation>> getAllOrFilteredConversations(@PathVariable(required = false) Long id) {
+        return new ResponseEntity<>(conversationService.findAllOrFilteredConversations(id), HttpStatus.OK);
     @CrossOrigin
     @GetMapping("/messages")
     public Set<Message> getAllMessages(){
         return messageService.findAllMessages();
     }
 
-    @GetMapping("/conversations")
-    public Set<Conversation> getAllConversations(){
-        return conversationService.findAllConversations();
+    @CrossOrigin
+    @GetMapping("/tickets/{id}/conversation")
+    public ResponseEntity<Conversation> getConversationsByTicketId(@PathVariable Long id) {
+        return new ResponseEntity<>(conversationService.getConversationsByTicketId(id), HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @PutMapping("/queues")
+    public ResponseEntity<Queue> createNewQueue(@RequestBody Queue DTO) {
+        return new ResponseEntity<>(ticketService.createNewQueue(DTO), HttpStatus.CREATED);
+    }
     @CrossOrigin
     @GetMapping(value = "ticketsByStatus/{id}")
     public Set<Ticket> filterTicketsByStatus(@PathVariable Long id) {
 
-        return ticketService.findAllTicketsByStatusId(id);
+    @CrossOrigin
+    @PostMapping("/tickets")
+    public ResponseEntity<Ticket> createNewTicket(@RequestBody NewTicketDTO DTO) {
+        return new ResponseEntity<>(ticketService.createNewTicket(DTO), HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "ticketsByUser/{id}")
-    public Set<Ticket> filterTicketsByUser(@PathVariable Long id) {
-
-        return ticketService.findAllTicketsByUserId(id);
+    @CrossOrigin
+    @PostMapping("/conversations/{id}")
+    public ResponseEntity<Message> createNewMessageInConversation(@PathVariable Long id, @RequestBody NewMessageDTO DTO) {
+        return new ResponseEntity<>(messageService.createNewMessageInConversation(id, DTO), HttpStatus.OK);
     }
 
+    @PutMapping(value = "/tickets/{id}/queue")
+    public ResponseEntity<?> putTicketInQueue(@PathVariable Long id, @RequestBody Queue queue) {
+        ticketService.setTicketQueue(id, queue);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/tickets/{id}/status")
+    public ResponseEntity<?> updateTicketStatus(@PathVariable Long id, @RequestBody Status status) {
+        ticketService.setTicketStatus(id, status);
+        return new ResponseEntity<>(HttpStatus.OK);
     @PostMapping("ticket/add")
     public void addNewTicketAndControllerAndMessage(@RequestBody ModelDTO modelDTO) {
         Ticket ticket = ticketService.createAndAddNewTicket(modelDTO);
@@ -62,9 +90,10 @@ public class TicketSystemController {
         System.out.println("New ticket, conversation and message were added");
     }
 
-    @GetMapping(value = "ticketsByQueueByStatus/{idQueue}/{idStatus}")
-    public Set<Ticket> filterTicketsByQueueAndStatus(@PathVariable Long idQueue,@PathVariable Long idStatus) {
-        return ticketService.findAllTicketsByQueueAndStatus(idQueue,idStatus);
+    @PutMapping(value = "/tickets/{id}/user")
+    public ResponseEntity<?> updateTicketAssignee(@PathVariable Long id, @RequestBody User user) {
+        ticketService.setTicketAssignee(id, user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value="conversation/add/message/{id}")

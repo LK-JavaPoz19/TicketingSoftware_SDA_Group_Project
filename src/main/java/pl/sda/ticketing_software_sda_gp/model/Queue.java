@@ -10,19 +10,17 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @Entity
-
-public class Queue {
-
+public final class Queue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false)
     private Long queueId;
 
     @NotNull
     @Column(nullable = false, unique = true)
-    private  String queueName;
+    private String queueName;
 
-
-
+    public Queue(String queueName) {
+        this.queueName = queueName;
+    }
 }
-

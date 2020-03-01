@@ -1,19 +1,21 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
 @Entity
-public class Message {
-
+public final class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false)
     private Long messageId;
 
     @NotNull
@@ -21,30 +23,34 @@ public class Message {
     private LocalDateTime created;
 
     @NotNull
+    @JsonBackReference
     @ManyToOne
+    @JoinColumn(nullable = false, updatable = false)
     private Conversation conversation;
 
     @NotNull
     @ManyToOne
+    @JoinColumn(nullable = false)
     private MessageType messageType;
 
     @NotNull
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User fromUser;
 
-
+    @NotNull
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User toUser;
 
     @NotNull
+    @Column(nullable = false, updatable = false)
     private String body;
 
-    public Message(){
-
-    }
-
+    @Builder
     public Message(LocalDateTime created, Conversation conversation,
-                   MessageType messageType, User fromUser, User toUser, String body) {
+                   MessageType messageType, User fromUser,
+                   User toUser, String body) {
         this.created = created;
         this.conversation = conversation;
         this.messageType = messageType;
@@ -52,42 +58,4 @@ public class Message {
         this.toUser = toUser;
         this.body = body;
     }
-
-    public Message(LocalDateTime created, Conversation conversation,
-                   MessageType messageType, User fromUser,  String body) {
-        this.created = created;
-        this.conversation = conversation;
-        this.messageType = messageType;
-        this.fromUser = fromUser;
-        this.body = body;
-    }
-
-    public Long getMessageId() {
-        return messageId;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public Conversation getConversation() {
-        return conversation;
-    }
-
-    public MessageType getMessageType() {
-        return messageType;
-    }
-
-    public User getFromUser() {
-        return fromUser;
-    }
-
-    public User getToUser() {
-        return toUser;
-    }
-
-    public String getBody() {
-        return body;
-    }
 }
-

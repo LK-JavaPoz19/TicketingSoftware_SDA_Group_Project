@@ -1,19 +1,17 @@
 package pl.sda.ticketing_software_sda_gp.mapper;
 
-import pl.sda.ticketing_software_sda_gp.model.*;
+import pl.sda.ticketing_software_sda_gp.model.NewTicketDTO;
+import pl.sda.ticketing_software_sda_gp.model.Status;
+import pl.sda.ticketing_software_sda_gp.model.Ticket;
+import pl.sda.ticketing_software_sda_gp.model.User;
 
 public class TicketMapper {
 
-    private ModelDTO modelDTO;
-
-    public TicketMapper(ModelDTO modelDTO) {
-        this.modelDTO = modelDTO;
-    }
-    public static Ticket map(ModelDTO modelDTO, Status status) {
+    public static Ticket map(Status status, User generalRecipient, NewTicketDTO DTO) {
         return Ticket.builder()
-                .queue(modelDTO.getQueue())
-                .user(modelDTO.getFromUser())
                 .ticketStatus(status)
+                .queue(DTO.getQueue())
+                .user(generalRecipient)
                 .build();
     }
 }

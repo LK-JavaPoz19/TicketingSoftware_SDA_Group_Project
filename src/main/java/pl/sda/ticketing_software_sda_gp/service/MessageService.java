@@ -1,44 +1,36 @@
 package pl.sda.ticketing_software_sda_gp.service;
 
-
 import org.springframework.stereotype.Service;
-import pl.sda.ticketing_software_sda_gp.model.*;
-import pl.sda.ticketing_software_sda_gp.service.ConversationService;
+import pl.sda.ticketing_software_sda_gp.model.Conversation;
+import pl.sda.ticketing_software_sda_gp.model.Message;
+import pl.sda.ticketing_software_sda_gp.model.NewMessageDTO;
+import pl.sda.ticketing_software_sda_gp.repository.ConversationRepository;
 import pl.sda.ticketing_software_sda_gp.repository.MessageRepository;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
+
+import static pl.sda.ticketing_software_sda_gp.mapper.MessageMapper.map;
 
 @Service
 public class MessageService {
-    MessageRepository messageRepository;
-    ConversationService conversationService;
+    private final ConversationRepository conversationRepository;
+    private final MessageRepository messageRepository;
+    private final ConversationService conversationService;
 
-    public MessageService(MessageRepository messageRepository, ConversationService conversationService) {
+    public MessageService(MessageRepository messageRepository, ConversationRepository conversationRepository, ConversationService conversationService) {
+        this.conversationRepository = conversationRepository;
         this.messageRepository = messageRepository;
         this.conversationService = conversationService;
     }
 
-    public Set<Message> findAllMessages() {
-
-        return new HashSet<>(messageRepository.findAll());
+    public Message createNewMessageInConversation(Long id, NewMessageDTO DTO) {
+        return messageRepository.save(map(
+                conversationRepository.findById(id).orElse(null), DTO));
     }
 
 
 
-    public void addMessage(Ticket ticket, ModelDTO modelDTO) {
-        Conversation conversation=conversationService.addConversation(ticket);
-        Message message = new Message(LocalDateTime.now(), conversation, modelDTO.getMessageType(),
-                modelDTO.getFromUser(), modelDTO.getToUser(),
-                modelDTO.getBody());
-        messageRepository.save(message);
-    }
-
-
-
-    public void addNewInternalMessageInExistingConversation(ModelDTO messageDTO, Long id) {
+    public void addNewInternalMessageInExistingConversation(NewMessageDTO messageDTO, Long id) {
         Conversation conversation = conversationService.findById(id);
         Message message = new Message(LocalDateTime.now(), conversation,
                 messageDTO.getMessageType(),
