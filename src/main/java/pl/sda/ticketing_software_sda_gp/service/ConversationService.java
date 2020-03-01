@@ -26,6 +26,10 @@ public class ConversationService {
         this.userRepository = userRepository;
     }
 
+    public Set<Conversation> findById(Long id){
+        return conversationRepository.findById(id);
+    }
+
     public Set<Conversation> findAllOrFilteredConversations(Long id) {
         if (id == null) return conversationRepository.findAllConversations();
         else return conversationRepository.findAllConversationsById(id);

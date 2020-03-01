@@ -16,4 +16,5 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
 
     @Query("SELECT c FROM Conversation c WHERE c.ticket.ticketId = :ticket")
     Conversation findConversationsByTicketId(Long ticket);
+
 }

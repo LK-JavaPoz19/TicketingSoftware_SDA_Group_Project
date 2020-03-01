@@ -1,5 +1,6 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,4 +17,10 @@ public final class MessageType {
 
     @Column(nullable = false, unique = true)
     private String messageTypeName;
+
+    @Builder
+    private MessageType(Long messageTypeId, String messageTypeName) {
+        this.messageTypeId = messageTypeId;
+        this.messageTypeName = messageTypeName;
+    }
 }

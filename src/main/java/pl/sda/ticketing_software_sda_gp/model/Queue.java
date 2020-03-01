@@ -1,5 +1,6 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
