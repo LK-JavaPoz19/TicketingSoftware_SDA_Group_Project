@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @Entity
-public class Ticket {
+public final class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)

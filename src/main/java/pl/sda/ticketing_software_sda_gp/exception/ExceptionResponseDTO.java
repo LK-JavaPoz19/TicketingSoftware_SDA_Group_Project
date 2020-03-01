@@ -1,13 +1,13 @@
 package pl.sda.ticketing_software_sda_gp.exception;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Value;
 
-@Setter
-@Getter
+@Value
 @Builder
 public class ExceptionResponseDTO {
-    private String status;
-    private String message;
+    String status;
+    String reason;
+    String type;
+    String message;
 }

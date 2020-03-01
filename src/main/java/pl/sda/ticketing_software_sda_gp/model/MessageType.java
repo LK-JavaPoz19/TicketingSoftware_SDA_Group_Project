@@ -5,10 +5,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@NoArgsConstructor
 @Data
-public class MessageType {
+@NoArgsConstructor
+@Entity
+public final class MessageType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)

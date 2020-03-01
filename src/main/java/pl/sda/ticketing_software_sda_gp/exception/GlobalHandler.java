@@ -7,22 +7,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.PersistenceException;
+
 @RestControllerAdvice
 public class GlobalHandler extends ResponseEntityExceptionHandler {
-
-    @ExceptionHandler(value = {
-            NotFoundException.class,
-            UserNotFoundException.class,
-            StatusNotFoundException.class,
-            QueueNotFoundException.class,
-            MessageTypeNotFound.class})
-    protected ResponseEntity<?> handleException(NotFoundException e, WebRequest request) {
-        return handleExceptionInternal(e, buildExceptionResponse(e), null, HttpStatus.NOT_FOUND, request);
+    @ExceptionHandler(value = PersistenceException.class)
+    protected ResponseEntity<?> handleException(PersistenceException e, WebRequest request) {
+        return handleExceptionInternal(e, buildExceptionResponse(e), null, HttpStatus.UNPROCESSABLE_ENTITY, request);
     }
 
     private ExceptionResponseDTO buildExceptionResponse(RuntimeException e) {
         return ExceptionResponseDTO.builder()
-                .status("ERROR")
+                .status("FAILED")
+                .reason("EXCEPTION")
+                .type(e.getClass().getSimpleName())
                 .message(e.getMessage())
                 .build();
     }

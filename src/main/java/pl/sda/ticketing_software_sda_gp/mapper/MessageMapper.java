@@ -6,24 +6,25 @@ import java.time.LocalDateTime;
 
 public class MessageMapper {
 
-    public static Message mapInitialMessage(NewTicketDTO DTO, Conversation conversation, User general){
+    public static Message map(Conversation conversation, NewMessageDTO DTO){
         return Message.builder()
                 .conversation(conversation)
                 .created(LocalDateTime.now())
                 .messageType(DTO.getMessageType())
                 .fromUser(DTO.getFromUser())
-                .toUser(general)
+                .toUser(DTO.getToUser())
                 .body(DTO.getBody())
                 .build();
     }
 
-    public static Message mapNewMessage(NewMessageDTO DTO) {
+    public static Message map(Conversation conversation, User generalRecipient, NewTicketDTO DTO) {
         return Message.builder()
+                .conversation(conversation)
                 .created(LocalDateTime.now())
-                .conversation(DTO.getConversation())
                 .messageType(DTO.getMessageType())
                 .fromUser(DTO.getFromUser())
-                .toUser(DTO.getToUser())
-                .body(DTO.getBody()).build();
+                .toUser(generalRecipient)
+                .body(DTO.getBody())
+                .build();
     }
 }
