@@ -1,13 +1,11 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Value;
 
-@Getter
-@Setter
+@Value
 public class NewMessageDTO {
-    private Long messageType;
-    private Long fromUser;
-    private Long toUser;
-    private String body;
+    MessageType messageType;
+    User fromUser;
+    User toUser;
+    String body;
 }

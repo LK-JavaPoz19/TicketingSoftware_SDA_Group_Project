@@ -24,57 +24,58 @@ public class TicketSystemController {
         this.conversationService = conversationService;
     }
 
-    @GetMapping(value = "/tickets")
+    @CrossOrigin
+    @GetMapping("/tickets")
     public ResponseEntity<Set<Ticket>> getAllOrFilteredTickets (@RequestParam(required = false) Long user,
                                                                 @RequestParam(required = false) Long queue,
                                                                 @RequestParam(required = false) Long status) {
         return new ResponseEntity<>(ticketService.getAllOrFilteredTickets(user, queue, status), HttpStatus.OK);
     }
 
-    @GetMapping("/conversations")
-    public ResponseEntity<Set<Conversation>> getAllOrFilteredConversations(@RequestParam(required = false) Long conversation) {
-        return new ResponseEntity<>(conversationService.findAllOrFilteredConversations(conversation), HttpStatus.OK);
+    @CrossOrigin
+    @GetMapping("/conversations/{id}")
+    public ResponseEntity<Set<Conversation>> getAllOrFilteredConversations(@PathVariable(required = false) Long id) {
+        return new ResponseEntity<>(conversationService.findAllOrFilteredConversations(id), HttpStatus.OK);
     }
 
-    @GetMapping("/messages")
-    public ResponseEntity<Set<Message>> getAllOrFilteredMessages(@RequestParam(required = false) Long conversation) {
-        return new ResponseEntity<>(messageService.findAllOrFilteredMessages(conversation), HttpStatus.OK);
-    }
-
-    @GetMapping("/tickets/{id}/conversations")
+    @CrossOrigin
+    @GetMapping("/tickets/{id}/conversation")
     public ResponseEntity<Conversation> getConversationsByTicketId(@PathVariable Long id) {
         return new ResponseEntity<>(conversationService.getConversationsByTicketId(id), HttpStatus.OK);
     }
 
-    @PostMapping("/queues") //TODO:zmienić na PUT i zwracać kod w zależności od tego czy istnieje czy nie
+    @CrossOrigin
+    @PutMapping("/queues")
     public ResponseEntity<Queue> createNewQueue(@RequestBody Queue DTO) {
         return new ResponseEntity<>(ticketService.createNewQueue(DTO), HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @PostMapping("/tickets")
     public ResponseEntity<Ticket> createNewTicket(@RequestBody NewTicketDTO DTO) {
         return new ResponseEntity<>(ticketService.createNewTicket(DTO), HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @PostMapping("/conversations/{id}")
     public ResponseEntity<Message> createNewMessageInConversation(@PathVariable Long id, @RequestBody NewMessageDTO DTO) {
         return new ResponseEntity<>(messageService.createNewMessageInConversation(id, DTO), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/tickets/{id}/set-queue-to-{queue}")
-    public ResponseEntity<?> putTicketInQueue(@PathVariable Long id, @PathVariable Long queue) {
+    @PutMapping(value = "/tickets/{id}/queue")
+    public ResponseEntity<?> putTicketInQueue(@PathVariable Long id, @RequestBody Queue queue) {
         ticketService.setTicketQueue(id, queue);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/tickets/{id}/set-status-to-{status}")
-    public ResponseEntity<?> updateTicketStatus(@PathVariable Long id, @PathVariable Long status) {
+    @PutMapping(value = "/tickets/{id}/status")
+    public ResponseEntity<?> updateTicketStatus(@PathVariable Long id, @RequestBody Status status) {
         ticketService.setTicketStatus(id, status);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/tickets/{id}/set-assignee-to-{user}")
-    public ResponseEntity<?> updateTicketAssignee(@PathVariable Long id, @PathVariable Long user) {
+    @PutMapping(value = "/tickets/{id}/user")
+    public ResponseEntity<?> updateTicketAssignee(@PathVariable Long id, @RequestBody User user) {
         ticketService.setTicketAssignee(id, user);
         return new ResponseEntity<>(HttpStatus.OK);
     }

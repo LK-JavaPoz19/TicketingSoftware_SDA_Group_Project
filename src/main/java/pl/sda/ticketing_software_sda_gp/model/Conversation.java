@@ -7,17 +7,19 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @Entity
-public class Conversation {
+public final class Conversation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long conversationId;
 
+    @NotNull
     @OneToOne
     private Ticket ticket;
 
@@ -25,7 +27,7 @@ public class Conversation {
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "conversation")
-    Set<Message> messages;
+    private Set<Message> messages;
 
     public Conversation(Ticket ticket) {
         this.ticket = ticket;
