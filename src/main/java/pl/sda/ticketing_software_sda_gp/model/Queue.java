@@ -1,5 +1,6 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @Entity
+
 public class Queue {
 
     @Id
@@ -19,5 +21,8 @@ public class Queue {
     @NotNull
     @Column(nullable = false, unique = true)
     private  String queueName;
+
+
+
 }
 

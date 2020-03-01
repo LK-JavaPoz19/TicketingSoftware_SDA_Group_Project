@@ -3,7 +3,7 @@ package pl.sda.ticketing_software_sda_gp.controller;
 import org.springframework.web.bind.annotation.*;
 import pl.sda.ticketing_software_sda_gp.model.Conversation;
 import pl.sda.ticketing_software_sda_gp.model.Message;
-import pl.sda.ticketing_software_sda_gp.model.TicketDTO;
+import pl.sda.ticketing_software_sda_gp.model.ModelDTO;
 import pl.sda.ticketing_software_sda_gp.model.Ticket;
 import pl.sda.ticketing_software_sda_gp.service.ConversationService;
 import pl.sda.ticketing_software_sda_gp.service.MessageService;
@@ -25,11 +25,13 @@ public class TicketSystemController {
         this.conversationService = conversationService;
     }
 
+    @CrossOrigin
     @GetMapping("/tickets")
     public Set<Ticket> getAllTickets(){
         return ticketService.findAllTickets();
     }
 
+    @CrossOrigin
     @GetMapping("/messages")
     public Set<Message> getAllMessages(){
         return messageService.findAllMessages();
@@ -40,6 +42,7 @@ public class TicketSystemController {
         return conversationService.findAllConversations();
     }
 
+    @CrossOrigin
     @GetMapping(value = "ticketsByStatus/{id}")
     public Set<Ticket> filterTicketsByStatus(@PathVariable Long id) {
 
@@ -53,9 +56,9 @@ public class TicketSystemController {
     }
 
     @PostMapping("ticket/add")
-    public void addNewTicketAndControllerAndMessage(@RequestBody TicketDTO ticketDTO) {
-        Ticket ticket = ticketService.createAndAddNewTicket(ticketDTO);
-        messageService.addMessageAndConversation(ticket, ticketDTO);
+    public void addNewTicketAndControllerAndMessage(@RequestBody ModelDTO modelDTO) {
+        Ticket ticket = ticketService.createAndAddNewTicket(modelDTO);
+        messageService.addMessage(ticket, modelDTO);
         System.out.println("New ticket, conversation and message were added");
     }
 
@@ -63,5 +66,14 @@ public class TicketSystemController {
     public Set<Ticket> filterTicketsByQueueAndStatus(@PathVariable Long idQueue,@PathVariable Long idStatus) {
         return ticketService.findAllTicketsByQueueAndStatus(idQueue,idStatus);
     }
+
+    @PostMapping(value="conversation/add/message/{id}")
+    public void addNewInternalMessageToConversation(@PathVariable Long id, @RequestBody ModelDTO messageDTO){
+        messageService.addNewInternalMessageInExistingConversation(messageDTO,id);
+        System.out.println("New internal message in conversation: "+id);
+    }
+
+
+
 
 }

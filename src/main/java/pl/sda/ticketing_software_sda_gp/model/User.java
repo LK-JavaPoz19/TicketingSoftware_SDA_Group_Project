@@ -1,7 +1,9 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -57,5 +60,13 @@ public class User {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    @Builder
+    private User(Long userId,String username,String password,UserType userType){
+        this.userId=userId;
+        this.username=username;
+        this.password=password;
+        this.userType=userType;
     }
 }

@@ -30,7 +30,7 @@ public class Ticket {
     private Queue queue;
 
     @Builder
-    private Ticket(User user, Status ticketStatus, Queue queue) {
+    public Ticket(User user, Status ticketStatus, Queue queue) {
         this.user = user;
         this.ticketStatus = ticketStatus;
         this.queue = queue;

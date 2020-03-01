@@ -32,7 +32,7 @@ public class Message {
     @ManyToOne
     private User fromUser;
 
-    @NotNull
+
     @ManyToOne
     private User toUser;
 
@@ -50,6 +50,15 @@ public class Message {
         this.messageType = messageType;
         this.fromUser = fromUser;
         this.toUser = toUser;
+        this.body = body;
+    }
+
+    public Message(LocalDateTime created, Conversation conversation,
+                   MessageType messageType, User fromUser,  String body) {
+        this.created = created;
+        this.conversation = conversation;
+        this.messageType = messageType;
+        this.fromUser = fromUser;
         this.body = body;
     }
 

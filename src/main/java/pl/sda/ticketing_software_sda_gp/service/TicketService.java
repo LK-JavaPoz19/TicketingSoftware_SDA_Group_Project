@@ -3,15 +3,13 @@ package pl.sda.ticketing_software_sda_gp.service;
 
 import org.springframework.stereotype.Service;
 import pl.sda.ticketing_software_sda_gp.exception.StatusNotFoundException;
-import pl.sda.ticketing_software_sda_gp.model.Status;
-import pl.sda.ticketing_software_sda_gp.model.TicketDTO;
+import pl.sda.ticketing_software_sda_gp.model.ModelDTO;
 import pl.sda.ticketing_software_sda_gp.model.Ticket;
 import pl.sda.ticketing_software_sda_gp.repository.QueueRepository;
 import pl.sda.ticketing_software_sda_gp.repository.StatusRepository;
 import pl.sda.ticketing_software_sda_gp.repository.TicketRepository;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import static pl.sda.ticketing_software_sda_gp.mapper.TicketMapper.map;
@@ -32,7 +30,7 @@ public class TicketService {
         return new HashSet<>(ticketRepository.findAll());
     }
 
-    public Ticket createAndAddNewTicket(TicketDTO ticketDTO) {
+    public Ticket createAndAddNewTicket(ModelDTO ticketDTO) {
         Ticket dbTicket = statusRepository.findById(1L)
                 .map(status -> map(ticketDTO, status))
                 .orElseThrow(() -> new StatusNotFoundException("Status not found."));
