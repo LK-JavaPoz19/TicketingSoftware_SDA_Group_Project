@@ -19,8 +19,8 @@ INSERT INTO status (status_name) VALUES ('SOLVED');
 INSERT INTO queue (queue_name) VALUES ('Test_Q_1');
 INSERT INTO queue (queue_name) VALUES ('Test_Q_2');
 
-INSERT INTO message_type (message_type_name) VALUES ('Reply');
 INSERT INTO message_type (message_type_name) VALUES ('Internal Note');
+INSERT INTO message_type (message_type_name) VALUES ('Reply');
 
 INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id) VALUES (1, 1, 1);
 INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id) VALUES (1, 2, 2);
@@ -44,8 +44,8 @@ INSERT INTO message (conversation_conversation_id, created, message_type_message
 INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:00:00', 1, 2, 4, 'Dzień dobry. Kontaktuje się w sprawie uszkodzenia mienia.');
 INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:30:00', 1, 4, 2, 'Nic mi o tym nie wiadomo!');
 INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:30:00', 1, 2, 4, 'Dziękuję za odpowiedź! Pozdrawiam.');
-INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:31:00', 2, 2, 1, 'SPRAWA ZAKNIĘTA');
-INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:45:00', 2, 6, 1, 'NIEPRAWDA - POPROŚ O WIĘCEJ SZCZEGÓŁÓW!!');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:31:00', 2, 2, 2, 'SPRAWA ZAKNIĘTA');
+INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (2, '2020-01-02 12:45:00', 2, 6, 2, 'NIEPRAWDA - POPROŚ O WIĘCEJ SZCZEGÓŁÓW!!');
 
 -- Konswersacja 3
 INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (3, '2020-01-05 20:00:00', 1, 4, 1, 'Dzień dobry. Potrzebuję pomocy!');

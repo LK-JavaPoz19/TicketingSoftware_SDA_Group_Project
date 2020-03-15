@@ -1,11 +1,9 @@
 {
 
-  "messageType" : {
-    "messageTypeId": 2
-  },
   "fromUser": {
     "userId": 7
   },
 
   "body": "Sprawa do ponownego rozpatrzenia"
 }
+

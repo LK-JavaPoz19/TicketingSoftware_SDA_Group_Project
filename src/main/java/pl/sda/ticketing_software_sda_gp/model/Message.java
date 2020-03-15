@@ -58,4 +58,6 @@ public final class Message {
         this.toUser = toUser;
         this.body = body;
     }
+
+
 }
