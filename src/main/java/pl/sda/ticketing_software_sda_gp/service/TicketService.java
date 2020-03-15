@@ -2,6 +2,7 @@ package pl.sda.ticketing_software_sda_gp.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.sda.ticketing_software_sda_gp.exception.ElementNotFoundException;
 import pl.sda.ticketing_software_sda_gp.model.*;
 import pl.sda.ticketing_software_sda_gp.repository.QueueRepository;
 import pl.sda.ticketing_software_sda_gp.repository.StatusRepository;
@@ -9,6 +10,7 @@ import pl.sda.ticketing_software_sda_gp.repository.TicketRepository;
 import pl.sda.ticketing_software_sda_gp.repository.UserRepository;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static pl.sda.ticketing_software_sda_gp.mapper.TicketMapper.map;
@@ -50,9 +52,9 @@ public class TicketService {
     }
 
     @Transactional
-    public Ticket createNewTicket(NewTicketDTO DTO) {
-        Ticket ticket = ticketRepository.save(map(getNewStatus(statusRepository), getGeneralRecipient(userRepository), DTO));
-        conversationService.addConversationAndFirstMessageForNewTicket(ticket, DTO);
+    public Ticket createNewTicket(NewTicketDTO ticketDTO, NewMessageDTO messageDTO ) {
+        Ticket ticket = ticketRepository.save(map(getNewStatus(statusRepository), getGeneralRecipient(userRepository), ticketDTO));
+        conversationService.addConversationAndFirstMessageForNewTicket(ticket, messageDTO);
         return ticket;
     }
 
@@ -70,5 +72,11 @@ public class TicketService {
 
     public Queue createNewQueue(Queue DTO) {
         return queueRepository.save(DTO);
+    }
+
+
+    public Ticket findById(Long id) throws ElementNotFoundException {
+        return ticketRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Not found"));
+
     }
 }

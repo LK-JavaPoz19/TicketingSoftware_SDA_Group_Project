@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pl.sda.ticketing_software_sda_gp.model.*;
 import pl.sda.ticketing_software_sda_gp.repository.MessageRepository;
+import pl.sda.ticketing_software_sda_gp.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -29,22 +30,27 @@ class MessageServiceTest {
     @Autowired
     MessageService sut;
 
+    @Autowired
+    UserRepository userRepository;
+
 
     @Test
     @Transactional
     void addNewInternalMessageInExistingConversation() {
         //given
-        Long id=1L;
+        Long existingConversationId=2L;
+        Long generalRecipientId=1L;
+        int expected = messageRepository.findAllByConversationIdIsAndToUserIs(existingConversationId,generalRecipientId).size()+1;
 
-        ModelDTO modelDTO=new ModelDTO(MessageType.builder().messageTypeId(1L).build(),User.builder().userId(2L).build(),"test");
+        NewMessageDTO messageDTO=new NewMessageDTO(MessageType.builder().messageTypeId(1L).build(),User.builder().userId(2L).build(), User.builder().userId(generalRecipientId).build(),"test");
         //when
 
-        sut.addNewInternalMessageInExistingConversation(modelDTO,id);
-        Set<Message> actual = messageRepository.findAllByConversationIdIsAndToUserIsNull(id);
+        sut.addNewInternalMessageInExistingConversation(existingConversationId, messageDTO);
+        Set<Message> actual = messageRepository.findAllByConversationIdIsAndToUserIs(existingConversationId,generalRecipientId);
 
         //then
 
-        assertEquals(1, actual.size());
+        assertEquals(expected, actual.size());
 
     }
 

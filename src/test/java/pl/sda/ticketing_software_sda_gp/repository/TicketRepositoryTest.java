@@ -29,7 +29,7 @@ class TicketRepositoryTest {
 
 
         //when
-        Set<Ticket> actual=sut.findAllByTicketStatusIs(statusId);
+        Set<Ticket> actual=sut.findAllTicketsByStatusId(statusId);
 
         //then
         assertThat(actual)
@@ -46,7 +46,7 @@ class TicketRepositoryTest {
 
 
         //when
-        Set<Ticket> actual=sut.findAllByUserIs(userId);
+        Set<Ticket> actual=sut.findAllTicketsByUserId(userId);
 
         //then
         assertThat(actual)
@@ -64,7 +64,7 @@ class TicketRepositoryTest {
 
 
         //when
-        Set<Ticket> actual=sut.findAllByQueueAndAndTicketStatusIs(queueId,statusId);
+        Set<Ticket> actual=sut.findAllTicketsByQueueAndAndTicketStatusIs(queueId,statusId);
 
         //then
         assertThat(actual)

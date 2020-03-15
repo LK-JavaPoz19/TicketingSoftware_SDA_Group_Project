@@ -65,7 +65,7 @@ public final class User {
     }
 
     @Builder
-    private User(Long userId,String username,String password,UserType userType){
+    public User(Long userId, String username, String password, UserType userType){
         this.userId=userId;
         this.username=username;
         this.password=password;

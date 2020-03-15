@@ -1,7 +1,9 @@
 package pl.sda.ticketing_software_sda_gp.service;
 
+import pl.sda.ticketing_software_sda_gp.model.MessageType;
 import pl.sda.ticketing_software_sda_gp.model.Status;
 import pl.sda.ticketing_software_sda_gp.model.User;
+import pl.sda.ticketing_software_sda_gp.repository.MessageTypeRepository;
 import pl.sda.ticketing_software_sda_gp.repository.StatusRepository;
 import pl.sda.ticketing_software_sda_gp.repository.UserRepository;
 
@@ -19,6 +21,12 @@ public class ServiceUtility {
         return userRepository.findById(1L)
                 .filter(user -> user.getUsername().equals("gen_recipient"))
                 .orElseThrow(() -> new IllegalStateException("General Recipient not set."));
+    }
+
+    static MessageType getInternalMessageType(MessageTypeRepository messageTypeRepository) {
+        return messageTypeRepository.findById(1L)
+                .filter(messageType -> messageType.getMessageTypeName().equals("Internal Note"))
+                .orElseThrow(() -> new IllegalStateException("Internal Note not set."));
     }
 
     static Status getNewStatus(StatusRepository statusRepository) {
