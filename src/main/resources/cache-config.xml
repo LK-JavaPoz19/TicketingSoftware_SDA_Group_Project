@@ -1,0 +1,12 @@
+<config xmls="http://www.ehcache.org/v3">
+    <cache alias="tickets" uses-template="tickets"/>
+
+    <cache-template name="tickets">
+        <expiry>
+            <ttl unit="seconds">60</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">2000</heap>
+        </resources>
+    </cache-template>
+</config>

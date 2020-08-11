@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
-@Entity
+@Entity()
 public final class Queue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,9 @@ public final class Queue {
     @Column(nullable = false, unique = true)
     private String queueName;
 
-    public Queue(String queueName) {
+    @Builder
+    public Queue(Long queueId, String queueName) {
+        this.queueId=queueId;
         this.queueName = queueName;
     }
 }

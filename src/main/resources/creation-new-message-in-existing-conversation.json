@@ -1,9 +1,14 @@
+
 {
 
-  "fromUser": {
-    "userId": 7
+  "messageType": {
+    "messageTypeId": 2
   },
-
-  "body": "Sprawa do ponownego rozpatrzenia"
+  "fromUser": {
+    "userId": 2
+  },
+  "toUser": {
+    "userId": 4
+  },
+  "body": "Dzien dośbry. Chcialbym poznac"
 }
-

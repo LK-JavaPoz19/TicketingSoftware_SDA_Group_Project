@@ -1,15 +1,15 @@
-INSERT INTO user_type (user_type_name) VALUES ('general_recipient');
-INSERT INTO user_type (user_type_name) VALUES ('consultant');
-INSERT INTO user_type (user_type_name) VALUES ('client');
-INSERT INTO user_type (user_type_name) VALUES ('team_leader');
+INSERT INTO user_type (user_type_name) VALUES ('ROLE_GENERAL_RECIPIENT');
+INSERT INTO user_type (user_type_name) VALUES ('ROLE_CONSULTANT');
+INSERT INTO user_type (user_type_name) VALUES ('ROLE_CLIENT');
+INSERT INTO user_type (user_type_name) VALUES ('ROLE_ADMIN');
 
-INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('gen_recipient', '#', 1);
-INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('a', '#', 2);
-INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('b', '#', 2);
-INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('c', '#', 3);
-INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('d', '#', 3);
-INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('x', '#', 4);
-INSERT INTO `user` (username, password, user_type_user_type_id) VALUES ('y', '#', 4);
+INSERT INTO `user` (username, password, user_type_user_type_id, enabled) VALUES ('gen', 'gen', 1, true);
+INSERT INTO `user` (username, password, user_type_user_type_id, enabled) VALUES ('admin', 'admin', 4, true);
+INSERT INTO `user` (username, password, user_type_user_type_id, enabled) VALUES ('client', 'client', 3, true);
+INSERT INTO `user` (username, password, user_type_user_type_id, enabled) VALUES ('consultant', 'consultant', 2, true);
+INSERT INTO `user` (username, password, user_type_user_type_id, enabled) VALUES ('d', '#', 4, true);
+INSERT INTO `user` (username, password, user_type_user_type_id, enabled) VALUES ('x', '#', 4, true);
+INSERT INTO `user` (username, password, user_type_user_type_id, enabled) VALUES ('y', '#', 4, true);
 
 
 INSERT INTO status (status_name) VALUES ('NEW');
@@ -22,20 +22,19 @@ INSERT INTO queue (queue_name) VALUES ('Test_Q_2');
 INSERT INTO message_type (message_type_name) VALUES ('Internal Note');
 INSERT INTO message_type (message_type_name) VALUES ('Reply');
 
-INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id) VALUES (1, 1, 1);
-INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id) VALUES (1, 2, 2);
-INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id) VALUES (1, 3, 2);
-INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id) VALUES (2, 1, 1);
-INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id) VALUES (2, 2, 3);
-INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id) VALUES (2, 3, 3);
+INSERT INTO conversation (conversation_id) VALUES (1);
+INSERT INTO conversation (conversation_id) VALUES (2);
+INSERT INTO conversation (conversation_id) VALUES (3);
+INSERT INTO conversation (conversation_id) VALUES (4);
+INSERT INTO conversation (conversation_id) VALUES (5);
+INSERT INTO conversation (conversation_id) VALUES (6);
 
-
-INSERT INTO conversation (ticket_ticket_id) VALUES (1);
-INSERT INTO conversation (ticket_ticket_id) VALUES (2);
-INSERT INTO conversation (ticket_ticket_id) VALUES (3);
-INSERT INTO conversation (ticket_ticket_id) VALUES (4);
-INSERT INTO conversation (ticket_ticket_id) VALUES (5);
-INSERT INTO conversation (ticket_ticket_id) VALUES (6);
+INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id, conversation_conversation_id) VALUES (1, 1, 1, 1);
+INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id, conversation_conversation_id) VALUES (1, 2, 2, 2);
+INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id, conversation_conversation_id) VALUES (1, 3, 2, 3);
+INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id, conversation_conversation_id) VALUES (2, 1, 1, 4);
+INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id, conversation_conversation_id) VALUES (2, 2, 3, 5);
+INSERT INTO ticket (queue_queue_id, ticket_status_status_id, user_user_id, conversation_conversation_id) VALUES (2, 3, 3, 6);
 
 -- Konwersacja 1
 INSERT INTO message (conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (1, '2020-01-01 09:42:00', 1, 4, 1, 'Dzien dośbry. Chcialbym poznac');
@@ -69,5 +68,10 @@ INSERT INTO message(conversation_conversation_id, created, message_type_message_
 INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (6, '2020-02-20 22:12:00', 1, 5, 3, 'Tylko sprawdzałem czy ktoś tu pracuje.');
 INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (6, '2020-02-20 22:13:00', 2, 3, 1, 'SPAM');
 INSERT INTO message(conversation_conversation_id, created, message_type_message_type_id, from_user_user_id, to_user_user_id, body) VALUES (6, '2020-02-21 08:15:00', 2, 7, 1, 'ZGADZA SIĘ');
+
+
+
+
+
 
 commit;

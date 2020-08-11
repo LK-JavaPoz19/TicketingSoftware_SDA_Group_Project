@@ -1,7 +1,6 @@
 package pl.sda.ticketing_software_sda_gp.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,4 +17,10 @@ public final class Status {
     @NotNull
     @Column(nullable =false, unique = true)
     private String statusName;
+
+    @Builder
+    public Status (Long statusId, String statusName){
+        this.statusId=statusId;
+        this.statusName=statusName;
+    }
 }

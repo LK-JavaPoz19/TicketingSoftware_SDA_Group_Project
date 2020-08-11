@@ -26,32 +26,42 @@ class MessageServiceTest {
 
     @Autowired
     MessageRepository messageRepository;
-
     @Autowired
     MessageService sut;
-
     @Autowired
     UserRepository userRepository;
 
+    @Test
+    @Transactional
+    void ShouldAddNewInternalMessageInExistingConversation() {
+        //given
+        Long existingConversationId = 2L;
+        Long generalRecipientId = 1L;
+        int expected = messageRepository.findAllByConversationIdIsAndToUserIs(existingConversationId, generalRecipientId).size() + 1;
+        NewMessageDTO messageDTO = new NewMessageDTO(MessageType.builder().messageTypeId(1L).build(), User.builder().userId(2L).build(), User.builder().userId(generalRecipientId).build(), "test");
+
+        //when
+        sut.addNewInternalMessageInExistingConversation(existingConversationId, messageDTO);
+        Set<Message> actual = messageRepository.findAllByConversationIdIsAndToUserIs(existingConversationId, generalRecipientId);
+
+        //then
+        assertEquals(expected, actual.size());
+    }
 
     @Test
     @Transactional
-    void addNewInternalMessageInExistingConversation() {
+    void shouldAddNewMessageInExistingTicket() {
         //given
-        Long existingConversationId=2L;
-        Long generalRecipientId=1L;
-        int expected = messageRepository.findAllByConversationIdIsAndToUserIs(existingConversationId,generalRecipientId).size()+1;
+        Long existingConversationId = 2L;
+        Long toUserId = 3L;
+        int expected = messageRepository.findAllByConversationIdIsAndToUserIs(existingConversationId, toUserId).size() + 1;
+        NewMessageDTO messageDTO = new NewMessageDTO(MessageType.builder().messageTypeId(2L).build(), User.builder().userId(2L).build(), User.builder().userId(toUserId).build(), "test");
 
-        NewMessageDTO messageDTO=new NewMessageDTO(MessageType.builder().messageTypeId(1L).build(),User.builder().userId(2L).build(), User.builder().userId(generalRecipientId).build(),"test");
         //when
-
-        sut.addNewInternalMessageInExistingConversation(existingConversationId, messageDTO);
-        Set<Message> actual = messageRepository.findAllByConversationIdIsAndToUserIs(existingConversationId,generalRecipientId);
+        sut.addNewMessageInTicket(existingConversationId, messageDTO);
+        Set<Message> actual = messageRepository.findAllByConversationIdIsAndToUserIs(existingConversationId, toUserId);
 
         //then
-
         assertEquals(expected, actual.size());
-
     }
-
 }

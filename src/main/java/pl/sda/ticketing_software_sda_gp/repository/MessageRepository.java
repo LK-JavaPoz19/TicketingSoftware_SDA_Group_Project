@@ -16,4 +16,8 @@ public interface MessageRepository extends JpaRepository<Message,Long> {
     @Query(value = "SELECT m from Message m WHERE m.conversation.conversationId = :conversationId and m.toUser.userId = :defaultId")
     Set<Message> findAllByConversationIdIsAndToUserIs(Long conversationId, Long defaultId);
 
+    @Query(value = "SELECT m from Message m WHERE m.conversation.conversationId = :conversationId")
+    Set<Message> findAllByConversationIdIs(Long conversationId);
+
+
 }

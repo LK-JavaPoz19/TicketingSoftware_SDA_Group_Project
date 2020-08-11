@@ -19,9 +19,9 @@ public final class Conversation {
     @Column(updatable = false)
     private Long conversationId;
 
-    @NotNull
-    @OneToOne
-    private Ticket ticket;
+//    @NotNull
+//    @OneToOne
+//    private Ticket ticket;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -29,7 +29,7 @@ public final class Conversation {
     @OneToMany(mappedBy = "conversation")
     private Set<Message> messages;
 
-    public Conversation(Ticket ticket) {
-        this.ticket = ticket;
-    }
+//    public Conversation(Ticket ticket) {
+//        this.ticket = ticket;
+//    }
 }

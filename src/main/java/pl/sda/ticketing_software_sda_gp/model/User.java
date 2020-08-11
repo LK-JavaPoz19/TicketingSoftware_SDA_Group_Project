@@ -2,7 +2,6 @@ package pl.sda.ticketing_software_sda_gp.model;
 
 
 import lombok.Builder;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +22,7 @@ public final class User {
     private String username;
 
     @NotNull
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;
 
@@ -32,8 +31,20 @@ public final class User {
     @JoinColumn(nullable = false)
     private UserType userType;
 
+
+    private boolean enabled;
+
     public Long getUserId() {
         return userId;
+    }
+
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setUserId(Long userId) {
@@ -65,10 +76,13 @@ public final class User {
     }
 
     @Builder
-    public User(Long userId, String username, String password, UserType userType){
+    public User(Long userId, String username, String password, UserType userType, boolean enabled){
         this.userId=userId;
         this.username=username;
         this.password=password;
         this.userType=userType;
+        this.enabled=enabled;
     }
+
+
 }
